@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Install Evolution X Custom ROM — AeroGuide</title>
+  <style>
+    :root {
+      --color-bg-dark: #121212;
+      --color-text-dark: #e0d9f2;
+      --color-primary-dark: #9b59b6;
+      --color-bg-light: #f5f7ff;
+      --color-text-light: #222222;
+      --color-primary-light: #6a5acd;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--color-bg-dark);
+      color: var(--color-text-dark);
+      font-family: var(--font-family);
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 1rem 2rem;
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: var(--color-bg-light);
+      color: var(--color-text-light);
+    }
+    h1, h2 { color: var(--color-primary-dark); }
+    body.light h1, body.light h2 { color: var(--color-primary-light); }
+    h1 { font-size: 2.2rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.4rem; margin-top: 2rem; }
+    p, li { margin-bottom: 1rem; }
+    ul { margin-left: 1.2rem; }
+    code, pre {
+      background: rgba(255,255,255,0.08);
+      padding: 4px 6px;
+      border-radius: 4px;
+      display: block;
+      white-space: pre-wrap;
+    }
+    a { color: var(--color-primary-dark); text-decoration: none; }
+    body.light a { color: var(--color-primary-light); }
+    a:hover { text-decoration: underline; }
+    button#darkModeToggle {
+      position: fixed; top: 1.3rem; right: 1.3rem;
+      background: var(--color-primary-dark); border:none;
+      color: var(--color-bg-dark); font-size:1.6rem;
+      padding:0.5rem 1.1rem; border-radius:9999px; cursor:pointer;
+      z-index:1000; transition:background 0.3s,color 0.3s;
+      box-shadow:0 2px 6px rgba(0,0,0,0.25);
+    }
+    body.light button#darkModeToggle {
+      background: var(--color-primary-light);
+      color: var(--color-bg-light);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .back-link { display:inline-block; margin-bottom:1.5rem; }
+    @media(max-width:520px){ body{padding:1rem;} h1{font-size:1.8rem;} }
+  </style>
+</head>
+<body>
+  <button id="darkModeToggle" title="Toggle dark mode">🌙</button>
+  <a href="../index.html" class="back-link">← Back to Home</a>
+
+  <h1>📱 The Complete Guide to Installing Evolution X Custom ROM</h1>
+  <p>Installing Evolution X gives your Android phone a clean Pixel-like experience, packed with customization, performance improvements, and privacy features. Here’s the full step-by-step guide.</p>
+
+  <h2>🔍 What Is a Custom ROM?</h2>
+  <p>A custom ROM replaces your stock Android system with a new one. Evolution X is based on AOSP and adds Pixel UI, privacy controls, and deep customization options.</p>
+
+  <h2>⚠️ Risks of Installing a Custom ROM</h2>
+  <ul>
+    <li>Voids warranty</li>
+    <li>Wipes your data</li>
+    <li>Incorrect flashing can brick your device</li>
+    <li>Banking apps may stop working (SafetyNet)</li>
+  </ul>
+
+  <h2>🧰 Tools You’ll Need</h2>
+  <ul>
+    <li>📦 <strong>Evolution X ROM</strong> — from <a href="https://evolution-x.org" target="_blank">evolution-x.org</a></li>
+    <li>🧙‍♂️ TWRP or Evolution X Recovery</li>
+    <li>💾 GApps (if required)</li>
+    <li>🔋 Magisk (optional for root)</li>
+    <li>🖥️ ADB & Fastboot</li>
+    <li>🔌 USB Cable + Windows or Linux PC</li>
+  </ul>
+
+  <h2>📝 Preparation Checklist</h2>
+  <ul>
+    <li>✅ Bootloader unlocked</li>
+    <li>✅ Full data backup</li>
+    <li>✅ Battery at 60% or more</li>
+    <li>✅ USB Debugging enabled</li>
+    <li>✅ ROM + GApps downloaded</li>
+    <li>✅ Recovery installed (TWRP/EvoX Recovery)</li>
+  </ul>
+
+  <h2>🔓 Step 1: Unlock Your Bootloader</h2>
+  <p>Every phone is different. Visit: <a href="https://github.com/melontini/bootloader-unlock-wall-of-shame" target="_blank">bootloader-unlock-wall-of-shame</a> to check your device’s process.</p>
+
+  <h2>💾 Step 2: Flash Custom Recovery</h2>
+  <pre>fastboot flash recovery twrp.img</pre>
+  <p>Then use button combo to boot into recovery immediately.</p>
+
+  <h2>📁 Step 3: Transfer Files</h2>
+  <ul>
+    <li>📦 EvolutionX-*.zip</li>
+    <li>💾 GApps.zip (if required)</li>
+    <li>🧪 Magisk.zip (optional for root)</li>
+  </ul>
+
+  <h2>🧼 Step 4: Wipe Your Device</h2>
+  <p>In TWRP:</p>
+  <ul>
+    <li>Wipe > Advanced Wipe</li>
+    <li>Select: Dalvik / ART Cache, System, Data, Cache</li>
+  </ul>
+  <p><strong>⚠️ Do NOT wipe Internal Storage unless files are backed up externally.</strong></p>
+
+  <h2>📲 Step 5: Flash the ROM</h2>
+  <ul>
+    <li>In Recovery → Install</li>
+    <li>Select the EvolutionX zip → Swipe to flash</li>
+    <li>Flash GApps and Magisk (optional)</li>
+    <li>Reboot → System</li>
+  </ul>
+  <p><strong>🚀 First boot takes 5–10 minutes</strong></p>
+
+  <h2>🛠️ Post-Installation Setup</h2>
+  <ul>
+    <li>Complete Android setup</li>
+    <li>Log into Google (if GApps used)</li>
+    <li>Install Magisk (if rooted)</li>
+    <li>Use Root Checker to verify root</li>
+    <li>Install useful apps: AdAway, LSPosed, etc.</li>
+  </ul>
+
+  <h2>💡 Tips & Extras</h2>
+  <ul>
+    <li>Always download ROM made for your specific device</li>
+    <li>Evolution X includes OTA if your device supports it</li>
+    <li>Use Magisk modules like DenyList for banking apps</li>
+    <li>Want a new ROM? Just wipe + flash again via recovery</li>
+  </ul>
+
+  <h2>🔄 Going Back to Stock</h2>
+  <ul>
+    <li>Download stock firmware</li>
+    <li>Use Odin (Samsung) or Fastboot (Pixel/Xiaomi)</li>
+    <li>Re-lock bootloader (optional)</li>
+  </ul>
+
+  <h2>📌 Final Thoughts</h2>
+  <p>Evolution X offers a smooth, clean, and powerful Android experience. If you're ready to take control of your phone, this is one of the best ROMs available—just make sure you follow each step carefully and always have backups.</p>
+
+  <script>
+    const b = document.body;
+    const t = document.getElementById('darkModeToggle');
+    function theme(a){ if(a==='light'){b.classList.add('light');t.textContent='🌙';}else{b.classList.remove('light');t.textContent='☀️';}}
+    const s = localStorage.getItem('aeroguide-theme') || 'dark';
+    theme(s);
+    t.addEventListener('click', ()=>{ const n = b.classList.contains('light') ? 'dark' : 'light'; theme(n); localStorage.setItem('aeroguide-theme', n); });
+  </script>
+</body>
+</html>

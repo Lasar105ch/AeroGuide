@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Root a Samsung Phone — AeroGuide</title>
+  <style>
+    :root {
+      --color-bg-dark: #121212;
+      --color-text-dark: #e0d9f2;
+      --color-primary-dark: #9b59b6;
+      --color-bg-light: #f5f7ff;
+      --color-text-light: #222222;
+      --color-primary-light: #6a5acd;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--color-bg-dark);
+      color: var(--color-text-dark);
+      font-family: var(--font-family);
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 1rem 2rem;
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: var(--color-bg-light);
+      color: var(--color-text-light);
+    }
+    h1, h2 { color: var(--color-primary-dark); }
+    body.light h1, body.light h2 { color: var(--color-primary-light); }
+    h1 { font-size: 2.2rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.4rem; margin-top: 2rem; }
+    p, li { margin-bottom: 1rem; }
+    ul { margin-left: 1.2rem; }
+    code, pre {
+      background: rgba(255,255,255,0.08);
+      padding: 4px 6px;
+      border-radius: 4px;
+      display: block;
+      white-space: pre-wrap;
+    }
+    a { color: var(--color-primary-dark); text-decoration: none; }
+    body.light a { color: var(--color-primary-light); }
+    a:hover { text-decoration: underline; }
+    button#darkModeToggle {
+      position: fixed; top: 1.3rem; right: 1.3rem;
+      background: var(--color-primary-dark); border:none;
+      color: var(--color-bg-dark); font-size:1.6rem;
+      padding:0.5rem 1.1rem; border-radius:9999px; cursor:pointer;
+      z-index:1000; transition:background 0.3s,color 0.3s;
+      box-shadow:0 2px 6px rgba(0,0,0,0.25);
+    }
+    body.light button#darkModeToggle {
+      background: var(--color-primary-light);
+      color: var(--color-bg-light);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .back-link { display:inline-block; margin-bottom:1.5rem; }
+    @media(max-width:520px){ body{padding:1rem;} h1{font-size:1.8rem;} }
+  </style>
+</head>
+<body>
+  <button id="darkModeToggle" title="Toggle dark mode">🌙</button>
+  <a href="../index.html" class="back-link">← Back to Home</a>
+
+  <h1>📱 The Complete Guide to Rooting a Samsung Phone</h1>
+  <p>Rooting gives you full control over your Samsung phone. With Magisk and Odin, you can unlock hidden potential—if done correctly. This guide explains every step, from bootloader unlocking to Magisk patching and flashing.</p>
+
+  <h2>🔍 What Is Rooting?</h2>
+  <p>Rooting grants superuser access—letting you modify system files, uninstall bloatware, run root apps, and more. Think of it as gaining “administrator” access on Android.</p>
+
+  <h2>⚠️ Risks of Rooting</h2>
+  <ul>
+    <li>Knox flag is permanently tripped</li>
+    <li>Warranty void</li>
+    <li>No OTA updates</li>
+    <li>Banking and secure apps may stop working</li>
+    <li>Risk of bricking your phone</li>
+    <li>Data loss</li>
+  </ul>
+
+  <h2>🧰 Tools You’ll Need</h2>
+  <ul>
+    <li>Magisk (latest APK)</li>
+    <li>Odin (Windows-only)</li>
+    <li>TWRP (optional)</li>
+    <li>Samsung USB Drivers</li>
+    <li>Frija or SamFW for firmware</li>
+    <li>A Windows PC</li>
+    <li>USB cable</li>
+  </ul>
+
+  <h2>📝 Pre-Rooting Checklist</h2>
+  <ul>
+    <li>Back up all data</li>
+    <li>Charge to at least 60%</li>
+    <li>Install Samsung USB drivers</li>
+    <li>Know your model (e.g., SM-G973F)</li>
+    <li>Download full firmware</li>
+    <li>Extract BL, AP, CP, CSC</li>
+    <li>Enable OEM Unlocking</li>
+    <li>Understand Knox will be tripped</li>
+  </ul>
+
+  <h2>🔓 Step 1: Unlock Bootloader</h2>
+  <ol>
+    <li>Go to Settings > About Phone > Software Info</li>
+    <li>Tap Build Number 7 times to unlock Developer Options</li>
+    <li>Enable OEM Unlocking</li>
+    <li>Boot to Download Mode (Power + Volume Down + USB connected)</li>
+    <li>Press Volume Up to unlock bootloader</li>
+  </ol>
+  <p><strong>⚠️ This will factory reset your phone!</strong></p>
+
+  <h2>💾 Step 2: Download and Extract Firmware</h2>
+  <ul>
+    <li>Use Frija or SamFW</li>
+    <li>Download the latest firmware</li>
+    <li>Extract: you’ll get AP, BL, CP, CSC, HOME_CSC</li>
+  </ul>
+
+  <h2>🧙 Step 3: Patch the AP File with Magisk</h2>
+  <ol>
+    <li>Transfer AP_xxx.tar.md5 to your phone</li>
+    <li>Install Magisk APK</li>
+    <li>Open Magisk → Install → Select and Patch a File</li>
+    <li>Choose the AP file → It will output magisk_patched.tar</li>
+    <li>Transfer magisk_patched.tar to your PC</li>
+  </ol>
+
+  <h2>⚡ Step 4: Flash with Odin</h2>
+  <ol>
+    <li>Reboot to Download Mode</li>
+    <li>Open Odin on PC (run as Admin)</li>
+    <li>Connect phone (should say “Added!”)</li>
+    <li>Load BL, CP, HOME_CSC, and the patched AP</li>
+    <li>Click Start → Wait for PASS</li>
+  </ol>
+  <p><strong>Tip:</strong> Uncheck “Auto Reboot” to manually boot to recovery</p>
+
+  <h2>🔁 Step 5: Finalize Root</h2>
+  <ol>
+    <li>Boot to recovery (Power + Volume Up)</li>
+    <li>Factory Reset (recommended if bootloop)</li>
+    <li>Reboot to system</li>
+    <li>Reinstall Magisk APK</li>
+    <li>Open Magisk and confirm root</li>
+  </ol>
+
+  <h2>🛠 After Rooting</h2>
+  <p>Install useful root apps:</p>
+  <ul>
+    <li>AdAway</li>
+    <li>Titanium Backup</li>
+    <li>Greenify</li>
+    <li>LSPosed</li>
+    <li>Root Explorer</li>
+  </ul>
+  <p>You can now use Magisk modules, debloat your phone, or flash custom ROMs.</p>
+
+  <h2>🧼 How to Unroot</h2>
+  <ul>
+    <li>Flash full stock firmware with Odin</li>
+    <li>Perform a factory reset</li>
+    <li>Open Magisk → Uninstall > Complete Uninstall</li>
+  </ul>
+  <p><strong>Note:</strong> Knox will still be tripped permanently</p>
+
+  <h2>🧠 FAQ</h2>
+  <ul>
+    <li><strong>Can I root without a PC?</strong> No, Odin is required.</li>
+    <li><strong>Will I lose data?</strong> Yes, during bootloader unlock.</li>
+    <li><strong>Can I get OTA updates?</strong> No. Manual updates only.</li>
+    <li><strong>Will Secure Folder work?</strong> No. Knox is tripped permanently.</li>
+  </ul>
+
+  <h2>📌 Final Thoughts</h2>
+  <p>Rooting a Samsung phone unlocks deep customization, but the process must be followed precisely. Always back up, double-check files, and take your time. Once rooted, you’ll experience a new level of control over your device.</p>
+
+  <script>
+    const b = document.body;
+    const t = document.getElementById('darkModeToggle');
+    function theme(a){ if(a==='light'){b.classList.add('light');t.textContent='🌙';}else{b.classList.remove('light');t.textContent='☀️';}}
+    const s = localStorage.getItem('aeroguide-theme') || 'dark';
+    theme(s);
+    t.addEventListener('click', ()=>{ const n = b.classList.contains('light') ? 'dark' : 'light'; theme(n); localStorage.setItem('aeroguide-theme', n); });
+  </script>
+</body>
+</html>

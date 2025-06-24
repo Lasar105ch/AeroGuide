@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Understanding Android Partitions — AeroGuide</title>
+  <style>
+    :root {
+      --color-bg-dark: #121212;
+      --color-text-dark: #e0d9f2;
+      --color-primary-dark: #9b59b6;
+      --color-bg-light: #f5f7ff;
+      --color-text-light: #222222;
+      --color-primary-light: #6a5acd;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: var(--color-bg-dark);
+      color: var(--color-text-dark);
+      font-family: var(--font-family);
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 1rem 2rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.7;
+    }
+
+    body.light {
+      background-color: var(--color-bg-light);
+      color: var(--color-text-light);
+    }
+
+    h1, h2, h3 {
+      color: var(--color-primary-dark);
+    }
+
+    body.light h1, body.light h2, body.light h3 {
+      color: var(--color-primary-light);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    p, li {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--color-primary-dark);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    body.light a {
+      color: var(--color-primary-light);
+    }
+
+    button#darkModeToggle {
+      position: fixed;
+      top: 1.3rem;
+      right: 1.3rem;
+      background-color: var(--color-primary-dark);
+      border: none;
+      color: var(--color-bg-dark);
+      font-size: 1.6rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    body.light button#darkModeToggle {
+      background-color: var(--color-primary-light);
+      color: var(--color-bg-light);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid #666;
+      padding: 0.6rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #222;
+    }
+
+    body.light th {
+      background-color: #ddd;
+    }
+
+    code {
+      background-color: rgba(255,255,255,0.08);
+      padding: 0.1rem 0.4rem;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+
+    @media (max-width: 520px) {
+      body { padding: 1rem 1.2rem; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <button id="darkModeToggle" title="Toggle dark mode">🌙</button>
+  <a href="../index.html" class="back-link">← Back to Home</a>
+
+  <h1>📱 Understanding Android Partitions: System, Vendor, Boot, Recovery & More</h1>
+
+  <p>When you flash custom ROMs, kernels, or recoveries, you’re often dealing with Android partitions — the different sections of your phone’s internal storage that hold specific parts of the OS. Understanding what these partitions do is essential for safely modding your device.</p>
+
+  <p>This guide breaks down the main Android partitions you’ll encounter and why they matter.</p>
+
+  <h2>🔍 What Are Android Partitions?</h2>
+  <p>Think of partitions like separate “rooms” in your phone’s internal storage, each with a specific role:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Partition</th>
+        <th>Purpose</th>
+        <th>Common Files/Contents</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Boot</td><td>Starts the OS, contains kernel & ramdisk</td><td>Kernel, init scripts</td></tr>
+      <tr><td>System</td><td>Core OS and built-in apps</td><td>Android framework, system apps</td></tr>
+      <tr><td>Vendor</td><td>Device drivers & binaries</td><td>Hardware drivers, HALs</td></tr>
+      <tr><td>Recovery</td><td>Recovery mode environment</td><td>TWRP, stock recovery</td></tr>
+      <tr><td>Data (userdata)</td><td>User data & apps</td><td>Apps, settings, media</td></tr>
+      <tr><td>Cache</td><td>Temporary system files</td><td>OTA files, app cache</td></tr>
+      <tr><td>EFS</td><td>Unique device/network data</td><td>IMEI, MAC, modem configs</td></tr>
+    </tbody>
+  </table>
+
+  <h2>⚙️ Partition Details</h2>
+
+  <h3>Boot Partition</h3>
+  <ul>
+    <li>Contains the kernel and ramdisk</li>
+    <li>Boots the device — loads first</li>
+    <li>Flashing kernels or Magisk touches this</li>
+    <li>Corruption = bootloop</li>
+  </ul>
+
+  <h3>System Partition</h3>
+  <ul>
+    <li>Main Android OS files & default apps</li>
+    <li>Replaced when flashing custom ROMs</li>
+    <li>Read-only during normal use</li>
+  </ul>
+
+  <h3>Vendor Partition</h3>
+  <ul>
+    <li>Contains device-specific hardware drivers</li>
+    <li>Flashing wrong vendor = hardware issues</li>
+  </ul>
+
+  <h3>Recovery Partition</h3>
+  <ul>
+    <li>Used to flash ROMs, wipe data/cache, install ZIPs</li>
+    <li>Can be stock or custom (TWRP recommended)</li>
+  </ul>
+
+  <h3>Data (Userdata)</h3>
+  <ul>
+    <li>Stores your apps, files, photos, settings</li>
+    <li>Wiped on factory reset or unlocking</li>
+    <li>Often encrypted</li>
+  </ul>
+
+  <h3>Cache</h3>
+  <ul>
+    <li>Stores OTA packages, app cache, temp files</li>
+    <li>Safe to wipe during issues</li>
+  </ul>
+
+  <h3>EFS</h3>
+  <ul>
+    <li>Critical! Contains IMEI, MAC, etc.</li>
+    <li>Corruption = lost network access</li>
+    <li>Backup before any major flash</li>
+  </ul>
+
+  <h2>🧰 Why Does Partition Knowledge Matter?</h2>
+  <ul>
+    <li>Prevents flashing wrong partitions</li>
+    <li>Helps troubleshoot bootloops or bugs</li>
+    <li>Makes rooting and tweaking safer</li>
+    <li>Improves success with ROM/kernels</li>
+  </ul>
+
+  <h2>📦 Common Flashing Commands & Targets</h2>
+
+  <table>
+    <thead>
+      <tr><th>Command</th><th>Target</th><th>Use</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>fastboot flash boot boot.img</code></td><td>Boot</td><td>Flash kernel</td></tr>
+      <tr><td><code>fastboot flash system system.img</code></td><td>System</td><td>Flash ROM</td></tr>
+      <tr><td><code>fastboot flash vendor vendor.img</code></td><td>Vendor</td><td>Update drivers</td></tr>
+      <tr><td><code>fastboot flash recovery recovery.img</code></td><td>Recovery</td><td>Install TWRP</td></tr>
+      <tr><td><code>fastboot erase cache</code></td><td>Cache</td><td>Fix minor issues</td></tr>
+      <tr><td><code>fastboot erase userdata</code></td><td>Data</td><td>Factory reset</td></tr>
+    </tbody>
+  </table>
+
+  <h2>📌 Final Tips</h2>
+  <ul>
+    <li>Backup EFS and Data before flashing</li>
+    <li>Only flash partitions for your exact model</li>
+    <li>Use TWRP for backups and flashing</li>
+    <li>Use <code>ls /dev/block/bootdevice/by-name/</code> to list partition names</li>
+  </ul>
+
+  <h2>🔐 Summary</h2>
+  <p>Android’s partition system keeps things organized and modular. Once you understand what each partition does, you’ll flash confidently without risking your device. Know what you’re modifying, and always back up before you flash!</p>
+
+  <script>
+    const body = document.body;
+    const toggle = document.getElementById('darkModeToggle');
+
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        body.classList.add('light');
+        toggle.textContent = '🌙';
+      } else {
+        body.classList.remove('light');
+        toggle.textContent = '☀️';
+      }
+    }
+
+    const savedTheme = localStorage.getItem('aeroguide-theme') || 'dark';
+    applyTheme(savedTheme);
+
+    toggle.addEventListener('click', () => {
+      const current = body.classList.contains('light') ? 'light' : 'dark';
+      const newTheme = current === 'light' ? 'dark' : 'light';
+      applyTheme(newTheme);
+      localStorage.setItem('aeroguide-theme', newTheme);
+    });
+  </script>
+</body>
+</html>

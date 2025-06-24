@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How to Safely Update Your Custom ROM Without Losing Data - AeroGuide</title>
+<style>
+  :root {
+    --color-bg-dark: #0a0a0a;
+    --color-text-dark: #e0d9f2;
+    --color-primary-dark: #9b59b6;
+    --color-bg-light: #f5f5f5;
+    --color-text-light: #222222;
+    --color-primary-light: #6a5acd;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-dark);
+    font-family: var(--font-family);
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  body.light {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-light);
+  }
+  h1, h2, h3 {
+    color: var(--color-primary-dark);
+    transition: color 0.3s ease;
+  }
+  body.light h1, body.light h2, body.light h3 {
+    color: var(--color-primary-light);
+  }
+  a {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+  }
+  body.light a {
+    color: var(--color-primary-light);
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  button#darkModeToggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--color-primary-dark);
+    border: none;
+    color: var(--color-bg-dark);
+    font-size: 1.4rem;
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    user-select: none;
+    z-index: 1000;
+  }
+  button#darkModeToggle:hover {
+    background-color: #b088e8;
+    color: #0a0a0a;
+  }
+  body.light button#darkModeToggle {
+    background-color: var(--color-primary-light);
+    color: var(--color-bg-light);
+  }
+  body.light button#darkModeToggle:hover {
+    background-color: #8b6ed9;
+    color: var(--color-bg-light);
+  }
+  ul {
+    list-style: disc inside;
+    margin-left: 1rem;
+  }
+  p, li {
+    line-height: 1.5;
+  }
+  section {
+    margin-bottom: 2rem;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--color-primary-dark);
+    margin: 2rem 0;
+  }
+  body.light hr {
+    border-top-color: var(--color-primary-light);
+  }
+</style>
+</head>
+<body>
+  <button id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+
+  <h1>🛡️ How to Safely Update Your Custom ROM Without Losing Data</h1>
+  <p>Dirty flashing lets you install a new ROM version without wiping your data or apps. This can save time and effort but needs to be done carefully.</p>
+
+  <section>
+    <h2>Before You Start</h2>
+    <ul>
+      <li>Make a full backup (Nandroid backup via TWRP or similar recovery)</li>
+      <li>Charge your device to at least 60%</li>
+      <li>Make sure your custom recovery is updated (TWRP, OrangeFox, etc.)</li>
+      <li>Download the new ROM zip file and compatible GApps if needed</li>
+      <li>Optional: Backup important app data with apps like Titanium Backup or via ADB</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Step-by-Step Dirty Flash Guide</h2>
+    <ol>
+      <li>Boot into your custom recovery (usually via Power + Volume Down or use <code>adb reboot recovery</code>)</li>
+      <li>In recovery, select "Install" and choose the new ROM zip file</li>
+      <li><strong>Important:</strong> In TWRP, uncheck "Wipe Data" or "Format Data" options; only flash the ROM zip</li>
+      <li>Flash GApps if your ROM requires it</li>
+      <li>Optional: Flash Magisk or other mods as needed</li>
+      <li>Wipe <code>Cache</code> and <code>Dalvik / ART Cache</code> only</li>
+      <li>Reboot system</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Tips & Warnings</h2>
+    <ul>
+      <li>Dirty flashing works best when updating within the same ROM family (e.g., LineageOS 19.x to 19.x)</li>
+      <li>If switching ROMs or major version upgrades, perform a full wipe to avoid issues</li>
+      <li>Sometimes, dirty flashing causes bootloops — keep backups handy</li>
+      <li>Always check the ROM's official instructions for any special steps</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Further Reading</h2>
+    <ul>
+      <li><a href="https://twrp.me/faq/dirtyflashing.html" target="_blank" rel="noopener noreferrer">TWRP Dirty Flashing FAQ</a></li>
+      <li><a href="https://forum.xda-developers.com/t/how-to-dirty-flash-lineageos-without-losing-data.3791248/" target="_blank" rel="noopener noreferrer">XDA Guide: Dirty Flash LineageOS</a></li>
+    </ul>
+  </section>
+
+<script>
+  // Dark mode toggle with localStorage sync
+  const body = document.body;
+  const toggle = document.getElementById('darkModeToggle');
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      body.classList.add('light');
+      toggle.textContent = '🌙';
+    } else {
+      body.classList.remove('light');
+      toggle.textContent = '☀️';
+    }
+  }
+
+  const savedTheme = localStorage.getItem('aeroguide-theme') || 'dark';
+  applyTheme(savedTheme);
+
+  toggle.addEventListener('click', () => {
+    const current = body.classList.contains('light') ? 'light' : 'dark';
+    const newTheme = current === 'light' ? 'dark' : 'light';
+    applyTheme(newTheme);
+    localStorage.setItem('aeroguide-theme', newTheme);
+  });
+</script>
+</body>
+</html>

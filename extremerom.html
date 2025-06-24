@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ExtremeROM Nexus V2 Installation Guide — AeroGuide</title>
+  <style>
+    :root {
+      --color-bg-dark: #121212;
+      --color-text-dark: #e0d9f2;
+      --color-primary-dark: #9b59b6;
+      --color-bg-light: #f5f7ff;
+      --color-text-light: #222222;
+      --color-primary-light: #6a5acd;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background-color: var(--color-bg-dark);
+      color: var(--color-text-dark);
+      font-family: var(--font-family);
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 1rem 2rem;
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.light {
+      background-color: var(--color-bg-light);
+      color: var(--color-text-light);
+    }
+    h1, h2 { color: var(--color-primary-dark); }
+    body.light h1, body.light h2 { color: var(--color-primary-light); }
+    h1 { font-size: 2.2rem; margin-bottom: 1rem; }
+    h2 { margin-top: 2rem; font-size: 1.4rem; }
+    p, li { margin-bottom: 1rem; }
+    ul { margin-left: 1.2rem; }
+    a { color: var(--color-primary-dark); text-decoration: none; }
+    body.light a { color: var(--color-primary-light); }
+    a:hover { text-decoration: underline; }
+    code { background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; }
+    button#darkModeToggle {
+      position: fixed; top: 1.3rem; right: 1.3rem;
+      background: var(--color-primary-dark); border: none;
+      color: var(--color-bg-dark); font-size: 1.6rem;
+      padding: 0.5rem 1.1rem; border-radius: 9999px;
+      cursor: pointer; z-index: 1000;
+      transition: background 0.3s, color 0.3s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+    body.light button#darkModeToggle {
+      background: var(--color-primary-light);
+      color: var(--color-bg-light);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .back-link { display: inline-block; margin-bottom: 1.5rem; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { border: 1px solid #666; padding: 0.6rem; }
+    th { background: #222; }
+    body.light th { background: #ddd; }
+    @media(max-width: 520px){ body{padding:1rem;} h1{font-size:1.8rem;} }
+  </style>
+</head>
+<body>
+  <button id="darkModeToggle" title="Toggle dark mode">🌙</button>
+  <a href="../index.html" class="back-link">← Back to Home</a>
+
+  <h1>📱 How to Install ExtremeROM Nexus V2 on Galaxy S10/S20/Note20/S21 (Exynos Only)</h1>
+
+  <p><strong>Supported devices:</strong><br>
+  S10e/S10/S10+/S10 5G • S20/S20+/S20 Ultra/S20 FE • Note20/Note20 Ultra • S21/S21+/S21 Ultra/S21 FE</p>
+
+  <p>
+    ExtremeROM Nexus V2 is a performance‑optimized One UI 7 (Android 15) ROM built from Galaxy S25 Ultra firmware.
+    Features include Magisk root, deKnoxed system, Galaxy AI, HDR, adaptive refresh, custom tweaks, and no bloat.
+  </p>
+
+  <h2>🌟 Features Overview</h2>
+  <ul>
+    <li>Galaxy S25 Ultra firmware base</li>
+    <li>One UI 7 + Android 15</li>
+    <li>Fully deKnoxed and rooted</li>
+    <li>Galaxy AI, Super HDR, adaptive refresh</li>
+    <li>SELinux enforcing & disabled telemetry</li>
+    <li>Upstream kernel, pre-included patches</li>
+    <li>Debloated yet feature-complete</li>
+  </ul>
+
+  <h2>🧰 Requirements</h2>
+  <ul>
+    <li>Samsung Exynos device</li>
+    <li>Windows PC with Odin 3.14+</li>
+    <li>ADB & Platform Tools</li>
+    <li>Stock BL & CP firmwares</li>
+    <li>TWRP for your model</li>
+    <li>ExtremeROM Nexus V2 ZIP</li>
+    <li>Unlocked bootloader</li>
+  </ul>
+
+  <h2>🔽 Installation Steps</h2>
+
+  <h3>1. Restock Bootloader & Modem</h3>
+  <p>Use Odin:</p>
+  <ul>
+    <li>Load BL, AP, CP, CSC (Home) and USER_DATA</li>
+    <li>Disable Auto Reboot, click <strong>Flash</strong>, wait for PASS</li>
+  </ul>
+
+  <h3>2. Boot into TWRP</h3>
+  <p>After PASS, do not let it reboot:</p>
+  <ul>
+    <li>For S10: hold Bixby + Vol Up + Power</li>
+    <li>For others: Vol Up + Power</li>
+    <li>Boot into TWRP recovery</li>
+  </ul>
+
+  <h3>3. Wipe & Format</h3>
+  <ul>
+    <li>TWRP → Wipe → Format Data → type <code>yes</code></li>
+    <li>Advanced Wipe: System, Data, Cache, Dalvik → Wipe</li>
+    <li>Reboot to Recovery</li>
+  </ul>
+
+  <h3>4. ADB Sideload Repartition (S10 only)</h3>
+  <p>Skip for S20/Note20/S21:</p>
+  <ul>
+    <li>TWRP → Advanced → ADB Sideload</li>
+    <li>adb sideload repartitioner.zip</li>
+    <li>Repeat with cleaner ZIP</li>
+  </ul>
+
+  <h3>5. Install ExtremeROM Nexus V2</h3>
+  <ul>
+    <li>TWRP → ADB Sideload → start</li>
+    <li>adb sideload ExtremeROM ZIP</li>
+    <li>After install → Reboot System</li>
+  </ul>
+
+  <p><strong>First boot:</strong> Takes 5–10 min. Confirm root with KernelSU Next or Root Checker.</p>
+
+  <h2>🔧 Troubleshooting</h2>
+  <table>
+    <thead><tr><th>Issue</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Bootloop</td>
+        <td>Reboot to TWRP → Wipe cache & dalvik → Reflash ROM</td>
+      </tr>
+      <tr>
+        <td>Camera crash</td>
+        <td>Wait for patch or use GCam</td>
+      </tr>
+      <tr>
+        <td>Setup FC</td>
+        <td>Reboot to recovery → Wipe data → try again</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>🧠 FAQ</h2>
+  <ul>
+    <li><strong>Dirty flash from another ROM? →</strong> No, clean flash only.</li>
+    <li><strong>Dirty flash from V1? →</strong> Possible but may cause bugs.</li>
+    <li><strong>Trips Knox? →</strong> Yes, permanently.</li>
+    <li><strong>OTA updates? →</strong> Not yet.</li>
+    <li><strong>Snapdragon devices? →</strong> No—Exynos only.</li>
+    <li><strong>Root pre-installed? →</strong> Yes, KernelSU Next.</li>
+  </ul>
+
+  <h2>📌 Final Tips</h2>
+  <ul>
+    <li>Backup EFS first</li>
+    <li>Keep ZIP on SD card for emergencies</li>
+    <li>Add LSPosed/Magisk modules</li>
+    <li>Use FakeKnox for certain apps</li>
+    <li>Optimize battery by disabling unused services</li>
+  </ul>
+
+  <p>Enjoy One UI 7 performance and customization! For issues and support, check out:<br>
+    <a href="https://t.me/+DZ1ovssG1uZlNDRk" target="_blank">Telegram Nexus ROM Group</a><br>
+    <a href="https://github.com/ExtremeXT/ExtremeROM?tab=readme-ov-file" target="_blank">ExtremeROM GitHub</a></p>
+
+  <script>
+    const body = document.body;
+    const toggle = document.getElementById('darkModeToggle');
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        body.classList.add('light');
+        toggle.textContent = '🌙';
+      } else {
+        body.classList.remove('light');
+        toggle.textContent = '☀️';
+      }
+    }
+    const saved = localStorage.getItem('aeroguide-theme') || 'dark';
+    applyTheme(saved);
+    toggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      applyTheme(newTheme);
+      localStorage.setItem('aeroguide-theme', newTheme);
+    });
+  </script>
+</body>
+</html>

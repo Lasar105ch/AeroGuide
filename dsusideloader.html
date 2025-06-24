@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Use DSU Sideloader — AeroGuide</title>
+  <style>
+    :root {
+      --color-bg-dark: #121212;
+      --color-text-dark: #e0d9f2;
+      --color-primary-dark: #9b59b6;
+      --color-bg-light: #f5f7ff;
+      --color-text-light: #222222;
+      --color-primary-light: #6a5acd;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--color-bg-dark);
+      color: var(--color-text-dark);
+      font-family: var(--font-family);
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 1rem 2rem;
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: var(--color-bg-light);
+      color: var(--color-text-light);
+    }
+    h1, h2 { color: var(--color-primary-dark); }
+    body.light h1, body.light h2 { color: var(--color-primary-light); }
+    h1 { font-size: 2.2rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.4rem; margin-top: 2rem; }
+    p, li { margin-bottom: 1rem; }
+    ul { margin-left: 1.2rem; }
+    code { background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; }
+    a { color: var(--color-primary-dark); text-decoration: none; }
+    body.light a { color: var(--color-primary-light); }
+    a:hover { text-decoration: underline; }
+    button#darkModeToggle {
+      position: fixed; top: 1.3rem; right: 1.3rem;
+      background: var(--color-primary-dark); border:none;
+      color: var(--color-bg-dark); font-size:1.6rem;
+      padding:0.5rem 1.1rem; border-radius:9999px; cursor:pointer;
+      z-index:1000; transition:background 0.3s,color 0.3s;
+      box-shadow:0 2px 6px rgba(0,0,0,0.25);
+    }
+    body.light button#darkModeToggle {
+      background: var(--color-primary-light);
+      color: var(--color-bg-light);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .back-link { display:inline-block; margin-bottom:1.5rem; }
+    table { width:100%; border-collapse:collapse; margin:1rem 0; }
+    th, td { border:1px solid #666; padding:0.6rem; }
+    th { background:#222; }
+    body.light th { background:#ddd; }
+    @media(max-width:520px){ body{padding:1rem;} h1{font-size:1.8rem;} }
+  </style>
+</head>
+<body>
+  <button id="darkModeToggle" title="Toggle dark mode">🌙</button>
+  <a href="../index.html" class="back-link">← Back to Home</a>
+
+  <h1>🧪 How to Use DSU Sideloader – Try Any ROM Without Flashing</h1>
+
+  <p>DSU lets you boot a GSI or ROM temporarily without wiping your main system. It runs separately like a second OS — ideal for testing Pixel/GSI builds. Just reboot when done to return to your original ROM.</p>
+
+  <h2>🔍 What Is DSU?</h2>
+  <p>Built into Android 10+, DSU (Dynamic System Update) loads a secondary system image (GSI) without modifying your installed ROM at all.</p>
+  <ul>
+    <li>No data loss — your ROM remains untouched</li>
+    <li>Runs like a live USB boot on PCs</li>
+    <li>Works on A/B & Treble-compatible devices</li>
+  </ul>
+
+  <h2>📦 What You Need</h2>
+  <ul>
+    <li>Treble-compatible device (A/B partitions)</li>
+    <li>GSI image (e.g. Pixel, Lineage)</li>
+    <li>ADB Platform Tools</li>
+    <li>Optional: Magisk + DSU Loader (for rooted use)</li>
+  </ul>
+
+  <h2>⚙️ Methods to Launch DSU</h2>
+  <p>Three methods:</p>
+  <ul>
+    <li><strong>ADB (No root):</strong> universal, clean</li>
+    <li><strong>DSU Loader (Magisk):</strong> rooted</li>
+    <li><strong>Developer Settings:</strong> if supported</li>
+  </ul>
+
+  <h2>📱 Method 1: ADB (No Root)</h2>
+  <ul>
+    <li>Enable Developer Options & USB Debugging.</li>
+    <li>Connect device via USB.</li>
+    <li>Install GSI via:</li>
+  </ul>
+  <pre><code>adb shell gsi_tool install [GSI-URL]
+adb shell dsu [GSI-URL] --wipe --install</code></pre>
+  <p>Or use local image:</p>
+  <pre><code>adb push system-gsi.img /data/gsi/
+adb shell gsi_tool install /data/gsi/system-gsi.img
+adb reboot dsu</code></pre>
+
+  <h2>📛 Exit DSU</h2>
+  <p>Simply reboot or power off — you'll return to your original ROM.</p>
+
+  <h2>🔒 Method 2: DSU Loader (Magisk)</h2>
+  <ul>
+    <li>Install DSU Loader via Magisk modules.</li>
+    <li>Open app → select GSI → Install.</li>
+    <li>Reboot to GSI or back as needed.</li>
+    <li>Optional: use DSU Helper for persistence.</li>
+  </ul>
+
+  <h2>⚙️ Method 3: Developer Settings</h2>
+  <ul>
+    <li>Go to Developer Options → find “DSU Loader.”</li>
+    <li>Select GSI, install and reboot.</li>
+    <li>Not available on all devices/ROMs.</li>
+  </ul>
+
+  <h2>❓ GSI ROM Recommendations</h2>
+  <ul>
+    <li>Stock Pixel GSI by phhusson</li>
+    <li>Lineage GSI, PixelOS, TrebleDroid</li>
+    <li>Ensure A/B, VNDK, and architecture match</li>
+    <li>Check using <code>adb shell getprop</code></li>
+  </ul>
+
+  <h2>🛠 Common DSU Errors</h2>
+  <ul>
+    <li><strong>Installation failed:</strong> wrong device type</li>
+    <li><strong>Wont boot:</strong> non-Treble/GSI mismatch</li>
+    <li><strong>Random reboot:</strong> known GSI bug</li>
+    <li><strong>Magisk issues:</strong> patch GSI or root separately</li>
+  </ul>
+
+  <h2>🧠 Tips</h2>
+  <ul>
+    <li>Use <code>adb logcat</code> for debugging.</li>
+    <li>Original ROM is untouched.</li>
+    <li>Works great on Pixel, OnePlus, Xiaomi, TrebleDroid ROMs.</li>
+  </ul>
+
+  <h2>🎯 Final Thoughts</h2>
+  <p>DSU is ideal for testing ROMs safely — like dual boot without risks. Perfect for devs, testers, and curious users. Try a GSI today without touching your main install!</p>
+
+  <script>
+    const b = document.body;
+    const t = document.getElementById('darkModeToggle');
+    function theme(a){ if(a==='light'){b.classList.add('light');t.textContent='🌙';}else{b.classList.remove('light');t.textContent='☀️';}}
+    const s = localStorage.getItem('aeroguide-theme') || 'dark';
+    theme(s);
+    t.addEventListener('click', ()=>{ const n = b.classList.contains('light') ? 'dark' : 'light'; theme(n); localStorage.setItem('aeroguide-theme', n); });
+  </script>
+</body>
+</html>

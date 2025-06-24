@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Convert Android to Treble-Compatible — AeroGuide</title>
+  <style>
+    :root {
+      --color-bg-dark: #121212;
+      --color-text-dark: #e0d9f2;
+      --color-primary-dark: #9b59b6;
+      --color-bg-light: #f5f7ff;
+      --color-text-light: #222222;
+      --color-primary-light: #6a5acd;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--color-bg-dark);
+      color: var(--color-text-dark);
+      font-family: var(--font-family);
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 1rem 2rem;
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: var(--color-bg-light);
+      color: var(--color-text-light);
+    }
+    h1, h2 { color: var(--color-primary-dark); }
+    body.light h1, body.light h2 { color: var(--color-primary-light); }
+    h1 { font-size: 2.2rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.4rem; margin-top: 2rem; }
+    p, li { margin-bottom: 1rem; }
+    ul { margin-left: 1.2rem; }
+    code, pre {
+      background: rgba(255,255,255,0.08);
+      padding: 4px 6px;
+      border-radius: 4px;
+      display: block;
+      white-space: pre-wrap;
+    }
+    a { color: var(--color-primary-dark); text-decoration: none; }
+    body.light a { color: var(--color-primary-light); }
+    a:hover { text-decoration: underline; }
+    button#darkModeToggle {
+      position: fixed; top: 1.3rem; right: 1.3rem;
+      background: var(--color-primary-dark); border:none;
+      color: var(--color-bg-dark); font-size:1.6rem;
+      padding:0.5rem 1.1rem; border-radius:9999px; cursor:pointer;
+      z-index:1000; transition:background 0.3s,color 0.3s;
+      box-shadow:0 2px 6px rgba(0,0,0,0.25);
+    }
+    body.light button#darkModeToggle {
+      background: var(--color-primary-light);
+      color: var(--color-bg-light);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .back-link { display:inline-block; margin-bottom:1.5rem; }
+    @media(max-width:520px){ body{padding:1rem;} h1{font-size:1.8rem;} }
+  </style>
+</head>
+<body>
+  <button id="darkModeToggle" title="Toggle dark mode">🌙</button>
+  <a href="../index.html" class="back-link">← Back to Home</a>
+
+  <h1>⚙️ How to Convert Any Android Device to Treble-Compatible</h1>
+
+  <p>Project Treble lets you flash GSIs (Generic System Images) like Pixel Experience or Lineage without needing a full port. If your device doesn’t support Treble, this advanced guide shows you how to simulate it — at your own risk.</p>
+
+  <h2>🧠 What Is Project Treble?</h2>
+  <p>Introduced with Android 8.0, Treble separates system and vendor partitions, making updates easier and GSIs bootable on many phones.</p>
+
+  <h2>🔍 Step 1: Check Treble Compatibility</h2>
+  <pre><code>adb shell getprop ro.treble.enabled</code></pre>
+  <p>If it returns <code>true</code>, you're already compatible. If <code>false</code>, proceed carefully.</p>
+
+  <h2>🧰 What You Need</h2>
+  <ul>
+    <li>Unlocked bootloader</li>
+    <li>TWRP or custom recovery</li>
+    <li>Full firmware for your model</li>
+    <li>Linux/macOS preferred (Windows possible)</li>
+    <li>Firmware extractor (payload-dumper, MTK tools, etc.)</li>
+    <li>GSI ROM for testing</li>
+  </ul>
+
+  <h2>🧪 Step 2: Analyze Your Partitions</h2>
+  <ul>
+    <li>Boot to TWRP → Advanced → Terminal</li>
+    <li>Type:</li>
+    <pre><code>ls /dev/block/bootdevice/by-name/</code></pre>
+    <li>Look for <code>system</code> and <code>vendor</code>. No <code>vendor</code>? That’s why Treble fails.</li>
+  </ul>
+
+  <h2>🛠 Step 3: Repartition for Treble (⚠️ Risky)</h2>
+
+  <h3>A. Extract Firmware</h3>
+  <ul>
+    <li>Use tools like <code>payload-dumper</code> or <code>SamsungExtractor</code></li>
+    <li>Extract <code>super.img</code>, <code>vendor.img</code>, <code>system.img</code></li>
+  </ul>
+
+  <h3>B. Unpack Dynamic Partitions</h3>
+  <pre><code>lpunpack super.img</code></pre>
+
+  <h3>C. Flash Partitions</h3>
+  <p>Using <code>fastboot</code> or TWRP:</p>
+  <pre><code>fastboot flash vendor vendor.img
+fastboot flash system system.img</code></pre>
+  <p>Or with <code>dd</code> in TWRP:</p>
+  <pre><code>dd if=vendor.img of=/dev/block/bootdevice/by-name/vendor</code></pre>
+
+  <h3>D. Optional: Create New Partition Table</h3>
+  <p>Advanced use only:</p>
+  <pre><code>lpmake --metadata-size=65536 --super-name=super --device super:123456789 \
+--group main:123456789 \
+--partition system:readonly:987654:main --image system=system.img \
+--partition vendor:readonly:987654:main --image vendor=vendor.img \
+--sparse --output new-super.img</code></pre>
+  <pre><code>fastboot flash super new-super.img</code></pre>
+
+  <h2>🧩 Step 4: Force Treble with build.prop</h2>
+  <pre><code>ro.treble.enabled=true
+ro.dynamic_partitions=true</code></pre>
+  <p>Edit this in <code>/system/build.prop</code> using Magisk or TWRP.</p>
+
+  <h2>🚀 Step 5: Boot a GSI</h2>
+  <pre><code>fastboot flash system gsi.img
+fastboot erase userdata
+fastboot reboot</code></pre>
+  <p>Or use DSU SideLoader (see previous guide).</p>
+
+  <h2>🛡 Recovery Plan</h2>
+  <ul>
+    <li>Keep full TWRP NANDroid backup</li>
+    <li>Save <code>super.img</code>, <code>boot.img</code>, <code>vbmeta.img</code></li>
+    <li>Backup EFS (especially for IMEI)</li>
+  </ul>
+
+  <h2>❓ Should You Try This?</h2>
+  <table>
+    <tr><th>✅ Good If</th><th>❌ Avoid If</th></tr>
+    <tr><td>You’re a dev, modder</td><td>This is your main phone</td></tr>
+    <tr><td>You love experiments</td><td>You can’t afford to brick</td></tr>
+  </table>
+
+  <h2>🔥 Final Thoughts</h2>
+  <p>This is the final boss of Android modding — manually converting your phone to Treble support. If you succeed, you unlock DSU booting, GSI flashing, and more. But go in prepared, and always back up first!</p>
+
+  <script>
+    const b = document.body;
+    const t = document.getElementById('darkModeToggle');
+    function theme(a){ if(a==='light'){b.classList.add('light');t.textContent='🌙';}else{b.classList.remove('light');t.textContent='☀️';}}
+    const s = localStorage.getItem('aeroguide-theme') || 'dark';
+    theme(s);
+    t.addEventListener('click', ()=>{ const n = b.classList.contains('light') ? 'dark' : 'light'; theme(n); localStorage.setItem('aeroguide-theme', n); });
+  </script>
+</body>
+</html>

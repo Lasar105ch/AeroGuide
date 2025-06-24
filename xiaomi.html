@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Complete Xiaomi Unbrick & EDL Flash Guide — AeroGuide</title>
+  <style>
+    :root {
+      --color-bg-dark: #121212;
+      --color-text-dark: #e0d9f2;
+      --color-primary-dark: #9b59b6;
+      --color-bg-light: #f5f7ff;
+      --color-text-light: #222222;
+      --color-primary-light: #6a5acd;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background-color: var(--color-bg-dark);
+      color: var(--color-text-dark);
+      font-family: var(--font-family);
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 1rem 2rem;
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.light {
+      background-color: var(--color-bg-light);
+      color: var(--color-text-light);
+    }
+    h1, h2 { color: var(--color-primary-dark); }
+    body.light h1, body.light h2 { color: var(--color-primary-light); }
+    h1 { font-size: 2.2rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.4rem; margin-top: 2rem; }
+    p, li { margin-bottom: 1rem; }
+    ul { margin-left: 1.2rem; }
+    code { background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; }
+    a { color: var(--color-primary-dark); text-decoration: none; }
+    body.light a { color: var(--color-primary-light); }
+    a:hover { text-decoration: underline; }
+    button#darkModeToggle {
+      position: fixed; top: 1.3rem; right: 1.3rem;
+      background: var(--color-primary-dark); border: none;
+      color: var(--color-bg-dark); font-size: 1.6rem;
+      padding: 0.5rem 1.1rem; border-radius: 9999px;
+      cursor: pointer; z-index: 1000;
+      transition: background 0.3s, color 0.3s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+    body.light button#darkModeToggle {
+      background: var(--color-primary-light);
+      color: var(--color-bg-light);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .back-link { display: inline-block; margin-bottom: 1.5rem; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { border: 1px solid #666; padding: 0.6rem; }
+    th { background: #222; }
+    body.light th { background: #ddd; }
+    @media(max-width: 520px){ body{padding:1rem;} h1{font-size:1.8rem;} }
+  </style>
+</head>
+<body>
+  <button id="darkModeToggle" title="Toggle dark mode">🌙</button>
+  <a href="../index.html" class="back-link">← Back to Home</a>
+
+  <h1>📱 Complete Xiaomi Unbrick & EDL Flash Guide (2025)</h1>
+
+  <p>Hard-bricked your Xiaomi? No boot, just black screen? This guide shows how to restore via EDL mode using MiFlash.</p>
+
+  <h2>🔍 What Is EDL Mode?</h2>
+  <p>EDL (Emergency Download Mode) is Qualcomm low-level flashing mode for bricked devices, communicates via USB COM port (9008).</p>
+  <ul>
+    <li>Works when fastboot/recovery are inaccessible</li>
+    <li>Blocks unlocked bootloader?</li>
+    <li>⚠️ Risky—can wipe phone or fail if wrong firmware</li>
+  </ul>
+
+  <h2>🛠 What You’ll Need</h2>
+  <ul>
+    <li>MiFlash Tool (Windows)</li>
+    <li>Fastboot ROM (from xiaomifirmwareupdater.com)</li>
+    <li>Qualcomm USB Drivers (QDLoader 9008)</li>
+    <li>USB cable (use USB 2.0 port)</li>
+    <li>Charged phone (≥50%)</li>
+    <li>EDL cable or test-point access</li>
+    <li>Windows PC</li>
+  </ul>
+
+  <h2>🔧 Step 1: Enter EDL Mode</h2>
+  <ul>
+    <li>A. **Test Point:** Short motherboard points after back cover open → PC shows QDLoader 9008</li>
+    <li>B. **EDL Cable:** Press-button USB cable → triggers EDL (not always reliable)</li>
+    <li>C. **From Fastboot:** <code>fastboot oem edl</code> (only if unlocked)</li>
+  </ul>
+
+  <h2>💻 Step 2: Setup Drivers & MiFlash</h2>
+  <ul>
+    <li>Install Qualcomm QDLoader drivers</li>
+    <li>Install MiFlash Tool (2022+)</li>
+    <li>Extract fastboot ROM—not inside ZIP</li>
+  </ul>
+
+  <h2>📥 Step 3: Flash via MiFlash</h2>
+  <ul>
+    <li>Run MiFlash as Admin → Refresh (COMxx appears)</li>
+    <li>Browse to ROM folder</li>
+    <li>Choose flash option:
+      <ul>
+        <li>clean all → wipes but keeps unlock</li>
+        <li>save user data → tries to preserve files</li>
+        <li>clean all and lock → resets and relocks bootloader</li>
+      </ul>
+    </li>
+    <li>Click Flash → wait for green “success”</li>
+  </ul>
+
+  <h2>🔄 Step 4: Reboot & Setup</h2>
+  <ul>
+    <li>Disconnect USB</li>
+    <li>Hold Power (±Volume Up for some models) ~10s</li>
+    <li>Phone boots into MIUI setup</li>
+  </ul>
+
+  <h2>🛠 Troubleshooting</h2>
+  <ul>
+    <li>No COM port? → Try USB cable/port or reinstall drivers</li>
+    <li>MiFlash “No Script Found”? → Point to folder with flash_all.bat</li>
+    <li>Stuck/Sahara error? → Wrong ROM or poor connection</li>
+  </ul>
+
+  <h2>🔐 Auth & Locked Bootloader</h2>
+  <ul>
+    <li>Newer Xiaomi require authorized servers for EDL flash</li>
+    <li>Unlocked bootloader bypasses some restrictions</li>
+    <li>Auth bypass exist but not covered here</li>
+  </ul>
+
+  <h2>📌 Final Thoughts</h2>
+  <p>EDL is your last resort. Always double-check model numbers and firmware files before flashing!</p>
+
+  <script>
+    const body = document.body;
+    const toggle = document.getElementById('darkModeToggle');
+    function applyTheme(t) {
+      if (t === 'light') {
+        body.classList.add('light');
+        toggle.textContent = '🌙';
+      } else {
+        body.classList.remove('light');
+        toggle.textContent = '☀️';
+      }
+    }
+    const saved = localStorage.getItem('aeroguide-theme') || 'dark';
+    applyTheme(saved);
+    toggle.addEventListener('click', () => {
+      const next = body.classList.contains('light') ? 'dark' : 'light';
+      applyTheme(next);
+      localStorage.setItem('aeroguide-theme', next);
+    });
+  </script>
+</body>
+</html>

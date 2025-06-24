@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Complete Guide to Flashing iPhone, iPad, or iPod with 3uTools - AeroGuide</title>
+<style>
+  :root {
+    --color-bg-dark: #0a0a0a;
+    --color-text-dark: #e0d9f2;
+    --color-primary-dark: #9b59b6;
+    --color-bg-light: #f5f5f5;
+    --color-text-light: #222222;
+    --color-primary-light: #6a5acd;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-dark);
+    font-family: var(--font-family);
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body.light {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-light);
+  }
+
+  h1, h2, h3 {
+    color: var(--color-primary-dark);
+    transition: color 0.3s ease;
+  }
+
+  body.light h1, body.light h2, body.light h3 {
+    color: var(--color-primary-light);
+  }
+
+  a {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+  }
+
+  body.light a {
+    color: var(--color-primary-light);
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  button#darkModeToggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--color-primary-dark);
+    border: none;
+    color: var(--color-bg-dark);
+    font-size: 1.4rem;
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    user-select: none;
+    z-index: 1000;
+  }
+
+  button#darkModeToggle:hover {
+    background-color: #b088e8;
+    color: #0a0a0a;
+  }
+
+  body.light button#darkModeToggle {
+    background-color: var(--color-primary-light);
+    color: var(--color-bg-light);
+  }
+
+  body.light button#darkModeToggle:hover {
+    background-color: #8b6ed9;
+    color: var(--color-bg-light);
+  }
+
+  ul {
+    list-style: disc inside;
+    margin-left: 1rem;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  th, td {
+    border: 1px solid var(--color-primary-dark);
+    padding: 0.5rem 1rem;
+    text-align: left;
+  }
+
+  body.light th, body.light td {
+    border-color: var(--color-primary-light);
+  }
+
+  p {
+    line-height: 1.5;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--color-primary-dark);
+    margin: 2rem 0;
+  }
+
+  body.light hr {
+    border-top-color: var(--color-primary-light);
+  }
+</style>
+</head>
+<body>
+  <button id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+
+  <h1>The Complete Guide to Flashing iPhone, iPad, or iPod with 3uTools</h1>
+  <p>Flashing your iPhone, iPad, or iPod can help you fix issues, downgrade iOS, or reinstall the system fresh. <strong>3uTools</strong> is a powerful, free Windows tool that simplifies flashing and jailbreaking for iOS devices.</p>
+
+  <section>
+    <h2>What You Need</h2>
+    <table>
+      <thead>
+        <tr><th>Tool/Item</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Windows PC</td><td>To run 3uTools</td></tr>
+        <tr><td>USB Lightning Cable</td><td>To connect your iOS device</td></tr>
+        <tr><td>3uTools Software</td><td>For flashing, jailbreaking, backup</td></tr>
+        <tr><td>Stable Internet</td><td>To download iOS firmware files</td></tr>
+        <tr><td>Backup of your data</td><td>In case anything goes wrong</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Step-by-Step Guide</h2>
+    <h3>1. Download and Install 3uTools</h3>
+    <p>Go to the official site: <a href="https://www.3u.com/" target="_blank" rel="noopener noreferrer">https://www.3u.com/</a><br>
+    Download the latest version of 3uTools.<br>
+    Install it on your Windows PC and launch the program.</p>
+
+    <h3>2. Connect Your iPhone/iPad/iPod</h3>
+    <p>Use your USB Lightning cable to connect your device to the PC.<br>
+    Trust the computer if prompted on the device.<br>
+    3uTools will detect your device and show details like model, iOS version, and battery status.</p>
+
+    <h3>3. Backup Your Device (Highly Recommended)</h3>
+    <p>In 3uTools, go to the <strong>Toolbox</strong> tab.<br>
+    Select <strong>Backup/Restore</strong> → <strong>Full Backup</strong>.<br>
+    Choose your backup location and start the backup process.</p>
+
+    <h3>4. Download the Correct iOS Firmware</h3>
+    <p>Click the <strong>Flash & JB</strong> tab.<br>
+    3uTools will automatically suggest the latest compatible firmware for your device.<br>
+    You can also select other versions if you want to downgrade or upgrade.<br>
+    Click <strong>Download</strong> next to the firmware you want.</p>
+
+    <h3>5. Start Flashing</h3>
+    <p>Once the firmware is downloaded, choose:<br>
+    <ul>
+      <li><strong>Retain User Data While Flashing</strong> — keeps your data (not always guaranteed)</li>
+      <li><strong>Flash Cleanly</strong> — erases everything (recommended for troubleshooting)</li>
+    </ul>
+    Click <strong>Flash</strong> to begin the flashing process.</p>
+
+    <h3>6. Wait for Flashing to Complete</h3>
+    <p>The process will take several minutes.<br>
+    Do <strong>NOT</strong> disconnect your device during flashing.<br>
+    The device will reboot automatically after flashing.</p>
+
+    <h3>7. Post-Flashing Setup</h3>
+    <p>After reboot, you’ll see the iOS welcome screen.<br>
+    Complete the setup on your device.<br>
+    If you did a clean flash, restore your backup via 3uTools or iCloud.</p>
+  </section>
+
+  <section>
+    <h2>Troubleshooting Tips</h2>
+    <table>
+      <thead>
+        <tr><th>Issue</th><th>Solution</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Device not recognized</td><td>Try another USB port, use original cable, trust PC</td></tr>
+        <tr><td>Flash fails or freezes</td><td>Restart PC and device, try clean flash</td></tr>
+        <tr><td>Stuck on Apple logo after flashing</td><td>Use 3uTools <strong>Easy Flash</strong> or DFU mode restore</td></tr>
+        <tr><td>Unable to downgrade iOS</td><td>Apple may have stopped signing that iOS version</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Useful Features of 3uTools</h2>
+    <ul>
+      <li><strong>Jailbreak Support:</strong> Jailbreak many iOS versions directly.</li>
+      <li><strong>Data Management:</strong> Backup, restore, and manage apps &amp; files.</li>
+      <li><strong>Real-Time System Info:</strong> Battery health, storage, etc.</li>
+      <li><strong>Flash Multiple Devices:</strong> Bulk flashing option for technicians.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Summary</h2>
+    <p>Using 3uTools is the easiest way to flash or restore your iPhone, iPad, or iPod without complicated command lines. Always back up your data before flashing, choose the right firmware, and follow prompts carefully.</p>
+  </section>
+
+<script>
+  // Dark mode toggle with localStorage sync
+  const body = document.body;
+  const toggle = document.getElementById('darkModeToggle');
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      body.classList.add('light');
+      toggle.textContent = '🌙';
+    } else {
+      body.classList.remove('light');
+      toggle.textContent = '☀️';
+    }
+  }
+
+  // Load saved theme or default dark
+  const savedTheme = localStorage.getItem('aeroguide-theme') || 'dark';
+  applyTheme(savedTheme);
+
+  toggle.addEventListener('click', () => {
+    const current = body.classList.contains('light') ? 'light' : 'dark';
+    const newTheme = current === 'light' ? 'dark' : 'light';
+    applyTheme(newTheme);
+    localStorage.setItem('aeroguide-theme', newTheme);
+  });
+</script>
+</body>
+</html>

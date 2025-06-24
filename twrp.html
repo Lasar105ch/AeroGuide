@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Install TWRP Recovery – AeroGuide</title>
+  <style>
+    :root {
+      --color-bg-dark: #121212;
+      --color-text-dark: #f0f0f0;
+      --color-primary-dark: #8e44ad;
+      --color-bg-light: #fdfdfd;
+      --color-text-light: #1a1a1a;
+      --color-primary-light: #6c5ce7;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      font-family: var(--font-family);
+      background: var(--color-bg-dark);
+      color: var(--color-text-dark);
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+    body.light {
+      background: var(--color-bg-light);
+      color: var(--color-text-light);
+    }
+    h1, h2 {
+      color: var(--color-primary-dark);
+    }
+    body.light h1, body.light h2 {
+      color: var(--color-primary-light);
+    }
+    h1 { font-size: 2.3rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.5rem; margin-top: 2rem; }
+    ul { margin-left: 1.2rem; margin-bottom: 1rem; }
+    code, pre {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 10px;
+      border-radius: 4px;
+      display: block;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    body.light code, body.light pre {
+      background: #eee;
+    }
+    a {
+      color: var(--color-primary-dark);
+      text-decoration: none;
+    }
+    body.light a {
+      color: var(--color-primary-light);
+    }
+    a:hover { text-decoration: underline; }
+    button#darkModeToggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 999px;
+      background: var(--color-primary-dark);
+      color: var(--color-bg-dark);
+      cursor: pointer;
+      z-index: 999;
+    }
+    body.light button#darkModeToggle {
+      background: var(--color-primary-light);
+      color: var(--color-bg-light);
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 500px) {
+      body { padding: 1rem; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <button id="darkModeToggle">🌙</button>
+  <a href="../index.html" class="back-link">← Back to Home</a>
+
+  <h1>📱 The Complete Guide to Installing TWRP on Any Android Device</h1>
+  <p>TWRP (Team Win Recovery Project) is a custom recovery that allows flashing ROMs, Magisk, kernels, and performing advanced Android operations like backup and restore. Here's how to install it on nearly any device.</p>
+
+  <h2>🔍 What Is TWRP Recovery?</h2>
+  <ul>
+    <li>Flash custom ROMs, kernels, Magisk, and ZIPs</li>
+    <li>Create and restore full backups (Nandroid)</li>
+    <li>Wipe partitions safely</li>
+    <li>Access terminal and file manager</li>
+  </ul>
+
+  <h2>⚠️ Requirements & Warnings</h2>
+  <ul>
+    <li>Bootloader must be unlocked</li>
+    <li>Wrong TWRP image can brick your phone</li>
+    <li>Some phones need AVB/DM-Verity disabled</li>
+    <li>Unlocking bootloader wipes data</li>
+  </ul>
+
+  <h2>🧰 Tools You’ll Need</h2>
+  <ul>
+    <li>📁 TWRP `.img` file for your exact device</li>
+    <li>🖥️ ADB & Fastboot (Platform Tools)</li>
+    <li>🔌 USB Cable</li>
+    <li>🔋 Battery charged above 50%</li>
+    <li>💻 PC (Windows/Linux/macOS)</li>
+  </ul>
+
+  <p>✅ Get TWRP from: <a href="https://twrp.me/Devices" target="_blank">https://twrp.me/Devices</a><br>
+  ✅ Get Platform Tools: <a href="https://developer.android.com/studio#cmdline-tools" target="_blank">Android Platform Tools</a></p>
+
+  <h2>🔓 Step 1: Unlock Your Bootloader</h2>
+  <p>Each brand is different. Visit:</p>
+  <p><a href="https://github.com/melontini/bootloader-unlock-wall-of-shame" target="_blank">Bootloader Unlock Wall of Shame</a></p>
+  <p><strong>⚠️ Unlocking wipes data and may void warranty.</strong></p>
+
+  <h2>📁 Step 2: Download TWRP</h2>
+  <ul>
+    <li>Visit <a href="https://twrp.me/Devices" target="_blank">twrp.me</a></li>
+    <li>Search your device (e.g., "SM-G973F")</li>
+    <li>Download latest `.img` file</li>
+    <li>Place it in your ADB folder and rename it to <code>twrp.img</code></li>
+  </ul>
+
+  <h2>💻 Step 3: Flash TWRP via Fastboot</h2>
+  <pre>
+adb reboot bootloader
+adb devices
+fastboot flash recovery twrp.img
+  </pre>
+  <p><strong>⚠️ Do NOT reboot to system after flashing!</strong></p>
+  <p>Instead, use button combo (Power + Volume Up) to boot directly into TWRP.</p>
+
+  <h2>🧼 Step 4: (Optional) Disable Forced Encryption</h2>
+  <p>If flashing custom ROMs:</p>
+  <ul>
+    <li>Go to Wipe → Format Data → type <code>yes</code></li>
+    <li>Flash <code>Disable_Dm-Verity_ForceEncrypt.zip</code> (from XDA)</li>
+  </ul>
+
+  <h2>📲 Step 5: Make TWRP Permanent (Samsung / Xiaomi)</h2>
+  <ul>
+    <li>Samsung: Use Odin, flash <code>twrp.img.tar</code> in <strong>AP</strong> slot</li>
+    <li>Boot directly into recovery after flash to avoid overwrite</li>
+  </ul>
+
+  <h2>🔁 Step 6: Flash Magisk or ROM</h2>
+  <p>Now that TWRP is installed, you can:</p>
+  <ul>
+    <li>Flash Magisk for root</li>
+    <li>Flash GApps</li>
+    <li>Flash custom ROMs like Evolution X</li>
+    <li>Create a backup (Recommended)</li>
+  </ul>
+  <p>Use <strong>Install</strong> in TWRP to flash ZIP files.</p>
+
+  <h2>🛠 Troubleshooting</h2>
+  <ul>
+    <li>❌ TWRP not booting? Boot into it immediately after flashing.</li>
+    <li>❌ Stuck on boot? Reboot to TWRP → Wipe System/Data/Cache → Reflash ROM.</li>
+    <li>❌ Encrypted data or password issue? Format Data or use Disable Encryption ZIP.</li>
+  </ul>
+
+  <h2>📌 Final Notes</h2>
+  <p>Installing TWRP gives you complete control over your device. With it, you can flash ROMs, root with Magisk, make full backups, and tweak your phone to perfection. Always double-check your files and never reboot into system after flashing unless TWRP boots first.</p>
+
+  <script>
+    const t = document.getElementById('darkModeToggle');
+    const b = document.body;
+    function setTheme(theme) {
+      if (theme === 'light') {
+        b.classList.add('light');
+        t.textContent = '🌙';
+      } else {
+        b.classList.remove('light');
+        t.textContent = '☀️';
+      }
+    }
+    const saved = localStorage.getItem('aeroguide-theme') || 'dark';
+    setTheme(saved);
+    t.onclick = () => {
+      const current = b.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('aeroguide-theme', current);
+      setTheme(current);
+    };
+  </script>
+</body>
+</html>

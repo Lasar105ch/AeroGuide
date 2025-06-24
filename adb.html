@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ADB & Fastboot Command Explainer - AeroGuide</title>
+<style>
+  :root {
+    --color-bg-dark: #0a0a0a;
+    --color-text-dark: #e0d9f2;
+    --color-primary-dark: #9b59b6;
+    --color-bg-light: #f5f5f5;
+    --color-text-light: #222222;
+    --color-primary-light: #6a5acd;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-dark);
+    font-family: var(--font-family);
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  body.light {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-light);
+  }
+  h1, h2, h3 {
+    color: var(--color-primary-dark);
+    transition: color 0.3s ease;
+  }
+  body.light h1, body.light h2, body.light h3 {
+    color: var(--color-primary-light);
+  }
+  a {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+  }
+  body.light a {
+    color: var(--color-primary-light);
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  button#darkModeToggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--color-primary-dark);
+    border: none;
+    color: var(--color-bg-dark);
+    font-size: 1.4rem;
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    user-select: none;
+    z-index: 1000;
+  }
+  button#darkModeToggle:hover {
+    background-color: #b088e8;
+    color: #0a0a0a;
+  }
+  body.light button#darkModeToggle {
+    background-color: var(--color-primary-light);
+    color: var(--color-bg-light);
+  }
+  body.light button#darkModeToggle:hover {
+    background-color: #8b6ed9;
+    color: var(--color-bg-light);
+  }
+  ul {
+    list-style: disc inside;
+    margin-left: 1rem;
+  }
+  p, li {
+    line-height: 1.5;
+  }
+  pre {
+    background: #222;
+    color: #ddd;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+  body.light pre {
+    background: #eee;
+    color: #222;
+  }
+  section {
+    margin-bottom: 2rem;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--color-primary-dark);
+    margin: 2rem 0;
+  }
+  body.light hr {
+    border-top-color: var(--color-primary-light);
+  }
+</style>
+</head>
+<body>
+  <button id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+
+  <h1>🧰 ADB & Fastboot Command Explainer</h1>
+  <p><strong>Everything You Need to Know to Master Android Debugging & Flashing</strong></p>
+
+  <section>
+    <p>ADB (Android Debug Bridge) and Fastboot are two essential tools every Android power user, developer, or ROM flasher needs. They allow you to interact with your Android phone from a computer for debugging, transferring files, flashing images, unlocking bootloaders, and much more.</p>
+    <p>✅ Requires USB Debugging enabled and proper drivers installed</p>
+  </section>
+
+  <section>
+    <h2>🔹 What is ADB?</h2>
+    <p>ADB (Android Debug Bridge) is a command-line tool that lets you communicate with your Android device via USB or wireless (Wi-Fi). It works when your device is booted into Android or Recovery (TWRP or stock).</p>
+
+    <h3>🔧 Common ADB Commands</h3>
+    <pre><code>adb devices          Lists connected devices
+adb reboot           Reboots your device
+adb reboot recovery  Boots device into recovery
+adb reboot bootloader Boots device into bootloader/fastboot
+adb push &lt;file&gt; &lt;location&gt;  Sends file from PC to device
+adb pull &lt;file&gt;              Copies file from device to PC
+adb install &lt;apk&gt;           Installs APK to device
+adb uninstall &lt;package&gt;      Removes installed app
+adb sideload &lt;zip&gt;           Flashes a ROM or zip via TWRP
+adb shell              Opens a terminal on your phone (with root if available)
+</code></pre>
+  </section>
+
+  <section>
+    <h2>🔹 What is Fastboot?</h2>
+    <p>Fastboot is a protocol used to modify the Android system partition. It works when the phone is in bootloader mode, before Android OS even loads.</p>
+    <p>⚠️ Not all devices support Fastboot (Samsung uses Download Mode + Odin instead)</p>
+
+    <h3>🔧 Common Fastboot Commands</h3>
+    <pre><code>fastboot devices               Confirms your phone is connected
+fastboot oem unlock            Unlocks bootloader (on some devices)
+fastboot flashing unlock       Standard bootloader unlock
+fastboot boot &lt;img&gt;             Boots a temporary recovery or kernel image
+fastboot flash recovery &lt;img&gt;    Flashes custom recovery like TWRP
+fastboot flash boot &lt;img&gt;        Flashes boot partition (kernel/magisk)
+fastboot flash system &lt;img&gt;      Flashes system image (ROM)
+fastboot erase userdata         Factory resets device
+fastboot reboot                 Reboots normally
+fastboot reboot bootloader      Reboots into fastboot again
+</code></pre>
+  </section>
+
+  <section>
+    <h2>🔐 Unlocking the Bootloader</h2>
+    <p><code>adb reboot bootloader</code><br><code>fastboot flashing unlock</code><br>May erase data and show a bootloader unlock screen</p>
+    <p>Some brands like Xiaomi require a wait time</p>
+    <p>Samsung does not use this — use "OEM Unlock" and Download Mode with Odin</p>
+  </section>
+
+  <section>
+    <h2>🧪 ADB Shell Power Tips</h2>
+    <p>Inside adb shell, you can run advanced commands:</p>
+    <pre><code>su                                   Switch to root (if rooted)
+pm list packages                      List all installed apps
+pm uninstall -k --user 0 &lt;package&gt;    Debloat system apps (non-root)
+settings get system &lt;setting&gt;         Read system settings
+settings put global &lt;key&gt; &lt;value&gt;   Write to global settings
+reboot                               Reboot from shell
+</code></pre>
+  </section>
+
+  <section>
+    <h2>🔄 Wireless ADB (No USB Needed)</h2>
+    <p>Connect both phone and PC to same Wi-Fi</p>
+    <p>Run:</p>
+    <pre><code>adb tcpip 5555
+adb connect &lt;device_ip&gt;:5555
+</code></pre>
+    <p>You can now use ADB wirelessly!</p>
+  </section>
+
+  <section>
+    <h2>📁 File Transfers</h2>
+    <pre><code>adb push file.zip /sdcard/
+adb pull /sdcard/DCIM/Photo.jpg
+</code></pre>
+  </section>
+
+  <section>
+    <h2>🛠 Tools That Use ADB</h2>
+    <ul>
+      <li><a href="https://github.com/0x192/universal-android-debloater" target="_blank" rel="noopener noreferrer">Universal Android Debloater</a></li>
+      <li><a href="https://github.com/Genymobile/scrcpy" target="_blank" rel="noopener noreferrer">Scrcpy (mirror screen to PC)</a></li>
+      <li>ADB GUI Tools: Minimal ADB & Fastboot, ADB AppControl, etc.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🧩 Troubleshooting ADB & Fastboot</h2>
+    <table>
+      <thead>
+        <tr><th>Issue</th><th>Solution</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Device not showing in adb devices</td><td>Enable USB Debugging & allow prompt</td></tr>
+        <tr><td>Fastboot not detecting phone</td><td>Use original USB cable, check drivers</td></tr>
+        <tr><td>ADB unauthorized</td><td>Revoke USB debugging and re-allow on phone</td></tr>
+        <tr><td>Bootloader unlock stuck</td><td>Ensure internet access + OEM unlock enabled</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>📚 Extra Resources</h2>
+    <ul>
+      <li><a href="https://forum.xda-developers.com/t/adb-fastboot-commands-list.3764204/" target="_blank" rel="noopener noreferrer">Android ADB Commands Full List (XDA)</a></li>
+      <li><a href="https://developer.android.com/studio/releases/platform-tools" target="_blank" rel="noopener noreferrer">Google’s SDK Platform Tools</a></li>
+      <li>Minimal ADB & Fastboot Tool</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🏁 Summary</h2>
+    <p>ADB & Fastboot are the Swiss army knife of Android. Mastering them will let you:</p>
+    <ul>
+      <li>Flash custom recoveries, kernels, and ROMs</li>
+      <li>Debloat, backup, and tweak your device</li>
+      <li>Recover from bootloops or soft bricks</li>
+      <li>Automate advanced modding tasks</li>
+    </ul>
+    <p>Whether you're a root user, developer, or just flashing your first ROM — ADB is your best friend.</p>
+  </section>
+
+<script>
+  // Dark mode toggle with localStorage sync
+  const body = document.body;
+  const toggle = document.getElementById('darkModeToggle');
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      body.classList.add('light');
+      toggle.textContent = '🌙';
+    } else {
+      body.classList.remove('light');
+      toggle.textContent = '☀️';
+    }
+  }
+
+  const savedTheme = localStorage.getItem('aeroguide-theme') || 'dark';
+  applyTheme(savedTheme);
+
+  toggle.addEventListener('click', () => {
+    const current = body.classList.contains('light') ? 'light' : 'dark';
+    const newTheme = current === 'light' ? 'dark' : 'light';
+    applyTheme(newTheme);
+    localStorage.setItem('aeroguide-theme', newTheme);
+  });
+</script>
+</body>
+</html>
