@@ -1,309 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AeroGuide</title>
-<style>
-  :root {
-    --color-bg-dark: #121212;
-    --color-bg-gradient-dark: linear-gradient(135deg, #1a1a2e, #0f3460);
-    --color-text-dark: #e0d9f2;
-    --color-primary-dark: #9b59b6;
-    --color-primary-hover-dark: #b088e8;
-    --color-bg-light: #f5f7ff;
-    --color-text-light: #222222;
-    --color-primary-light: #6a5acd;
-    --color-primary-hover-light: #8b6ed9;
-    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --card-bg-dark: #1e1e2f;
-    --card-bg-light: #ffffff;
-    --card-shadow-dark: rgba(155, 89, 182, 0.2);
-    --card-shadow-hover-dark: rgba(155, 89, 182, 0.6);
-    --card-shadow-light: rgba(106, 90, 205, 0.15);
-    --card-shadow-hover-light: rgba(106, 90, 205, 0.4);
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AeroGuide</title>
+  <style>
+    :root {
+      --color-bg-dark: #121212;
+      --color-bg-gradient-dark: linear-gradient(135deg, #1a1a2e, #0f3460);
+      --color-text-dark: #e0d9f2;
+      --color-primary-dark: #9b59b6;
+      --color-primary-hover-dark: #b088e8;
+      --color-bg-light: #f5f7ff;
+      --color-text-light: #222222;
+      --color-primary-light: #6a5acd;
+      --color-primary-hover-light: #8b6ed9;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --card-bg-dark: #1e1e2f;
+      --card-bg-light: #ffffff;
+      --card-shadow-dark: rgba(155, 89, 182, 0.2);
+      --card-shadow-hover-dark: rgba(155, 89, 182, 0.6);
+      --card-shadow-light: rgba(106, 90, 205, 0.15);
+      --card-shadow-hover-light: rgba(106, 90, 205, 0.4);
+    }
 
-  /* Reset & base */
-  * {
-    box-sizing: border-box;
-  }
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
 
-  body {
-    background: var(--color-bg-gradient-dark);
-    color: var(--color-text-dark);
-    font-family: var(--font-family);
-    max-width: 900px;
-    margin: 3rem auto 4rem auto;
-    padding: 2rem 2.5rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    line-height: 1.6;
-    border-radius: 20px;
-    box-shadow: 0 0 30px rgba(155, 89, 182, 0.3);
-  }
-
-  body.light {
-    background-color: var(--color-bg-light);
-    color: var(--color-text-light);
-    box-shadow: none;
-    border-radius: 0;
-  }
-
-  /* Header with logo and title */
-  header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  header img {
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
-  }
-
-  header h1 {
-    font-weight: 800;
-    font-size: 3rem;
-    color: var(--color-primary-dark);
-    margin: 0;
-    user-select: none;
-    letter-spacing: 1.1px;
-    transition: color 0.3s ease;
-  }
-  body.light header h1 {
-    color: var(--color-primary-light);
-  }
-
-  p.subtitle {
-    font-size: 1.3rem;
-    color: var(--color-text-dark);
-    margin-bottom: 3rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    transition: color 0.3s ease;
-  }
-  body.light p.subtitle {
-    color: var(--color-text-light);
-  }
-
-  a {
-    color: var(--color-primary-dark);
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  body.light a {
-    color: var(--color-primary-light);
-  }
-  a:hover,
-  a:focus {
-    text-decoration: underline;
-  }
-
-  /* Card style for guides */
-  section.guide-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.8rem;
-  }
-
-  section.guide-list a.guide-card {
-    background-color: var(--card-bg-dark);
-    padding: 1.8rem 2.5rem;
-    border-radius: 20px;
-    box-shadow: 0 6px 16px var(--card-shadow-dark);
-    display: block;
-    transition:
-      background-color 0.3s ease,
-      box-shadow 0.4s ease,
-      transform 0.3s ease;
-  }
-  body.light section.guide-list a.guide-card {
-    background-color: var(--card-bg-light);
-    box-shadow: 0 6px 16px var(--card-shadow-light);
-  }
-  section.guide-list a.guide-card:hover,
-  section.guide-list a.guide-card:focus {
-    box-shadow: 0 12px 30px var(--card-shadow-hover-dark);
-    transform: scale(1.05);
-    background-color: #2e1e4f;
-  }
-  body.light section.guide-list a.guide-card:hover,
-  body.light section.guide-list a.guide-card:focus {
-    box-shadow: 0 12px 30px var(--card-shadow-hover-light);
-    transform: scale(1.05);
-    background-color: #f0f0ff;
-  }
-
-  /* Guide title and description */
-  a.guide-card h2 {
-    margin: 0 0 0.6rem 0;
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: var(--color-primary-dark);
-    user-select: none;
-    letter-spacing: 0.03em;
-  }
-  body.light a.guide-card h2 {
-    color: var(--color-primary-light);
-  }
-  a.guide-card p {
-    margin: 0;
-    font-size: 1.1rem;
-    color: var(--color-text-dark);
-    opacity: 0.9;
-    font-weight: 500;
-  }
-  body.light a.guide-card p {
-    color: var(--color-text-light);
-  }
-
-  /* Dark mode toggle button */
-  button#darkModeToggle {
-    position: fixed;
-    top: 1.3rem;
-    right: 1.3rem;
-    background-color: var(--color-primary-dark);
-    border: none;
-    color: var(--color-bg-dark);
-    font-size: 1.8rem;
-    padding: 0.6rem 1.3rem;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    user-select: none;
-    z-index: 1000;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.35);
-  }
-  button#darkModeToggle:hover {
-    background-color: var(--color-primary-hover-dark);
-    color: #0a0a0a;
-  }
-  body.light button#darkModeToggle {
-    background-color: var(--color-primary-light);
-    color: var(--color-bg-light);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  }
-  body.light button#darkModeToggle:hover {
-    background-color: var(--color-primary-hover-light);
-    color: var(--color-bg-light);
-  }
-
-  /* Sticky About button above guides */
-  #aboutStickyBtn {
-    position: sticky;
-    top: 0;
-    background-color: var(--color-primary-dark);
-    color: var(--color-bg-dark);
-    padding: 0.65rem 1.3rem;
-    font-weight: 800;
-    font-size: 1.15rem;
-    border-radius: 0 0 20px 20px;
-    cursor: pointer;
-    text-align: center;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.35);
-    z-index: 500;
-    user-select: none;
-    margin-bottom: 2rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  #aboutStickyBtn:hover {
-    background-color: var(--color-primary-hover-dark);
-    color: #0a0a0a;
-  }
-  body.light #aboutStickyBtn {
-    background-color: var(--color-primary-light);
-    color: var(--color-bg-light);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  }
-  body.light #aboutStickyBtn:hover {
-    background-color: var(--color-primary-hover-light);
-    color: var(--color-bg-light);
-  }
-
-  /* Responsive tweaks */
-  @media (max-width: 520px) {
     body {
-      padding: 1.2rem 1.5rem;
-      margin: 2.5rem 1rem 3rem 1rem;
-      border-radius: 12px;
+      background: var(--color-bg-gradient-dark);
+      color: var(--color-text-dark);
+      font-family: var(--font-family);
+      max-width: 900px;
+      margin: 3rem auto 4rem auto;
+      padding: 2rem 2.5rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.6;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(155, 89, 182, 0.3);
     }
-    header h1 {
-      font-size: 2.4rem;
+
+    body.light {
+      background-color: var(--color-bg-light);
+      color: var(--color-text-light);
+      box-shadow: none;
+      border-radius: 0;
     }
-    section.guide-list a.guide-card {
-      padding: 1.2rem 1.5rem;
-    }
-    a.guide-card h2 {
-      font-size: 1.35rem;
-    }
-    p.subtitle {
-      font-size: 1.15rem;
+
+    /* Header with logo and title */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
       margin-bottom: 2rem;
     }
-    #aboutStickyBtn {
-      font-size: 1.05rem;
-      padding: 0.55rem 1.1rem;
-      margin-bottom: 1.5rem;
-    }
-  }
 
-  /* About popup modal styles */
-  #aboutModal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0,0,0,0.65);
-    backdrop-filter: blur(5px);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
-  #aboutModal.active {
-    display: flex;
-  }
-  #aboutModal .modal-content {
-    background-color: var(--card-bg-dark);
-    color: var(--color-text-dark);
-    padding: 2rem;
-    border-radius: 18px;
-    max-width: 600px;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 0 20px rgba(155, 89, 182, 0.6);
-    position: relative;
-  }
-  body.light #aboutModal .modal-content {
-    background-color: var(--card-bg-light);
-    color: var(--color-text-light);
-    box-shadow: 0 0 20px var(--card-shadow-hover-light);
-  }
-  #aboutModal .close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--color-primary-dark);
-    cursor: pointer;
-    transition: color 0.3s ease;
-    user-select: none;
-  }
-  #aboutModal .close-btn:hover {
-    color: var(--color-primary-hover-dark);
-  }
-  body.light #aboutModal .close-btn {
-    color: var(--color-primary-light);
-  }
-  body.light #aboutModal .close-btn:hover {
-    color: var(--color-primary-hover-light);
-  }
-</style>
+    header img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
+    }
+
+    header h1 {
+      font-weight: 800;
+      font-size: 3rem;
+      color: var(--color-primary-dark);
+      margin: 0;
+      user-select: none;
+      letter-spacing: 1.1px;
+      transition: color 0.3s ease;
+    }
+    body.light header h1 {
+      color: var(--color-primary-light);
+    }
+
+    p.subtitle {
+      font-size: 1.3rem;
+      color: var(--color-text-dark);
+      margin-bottom: 3rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.3s ease;
+    }
+    body.light p.subtitle {
+      color: var(--color-text-light);
+    }
+
+    a {
+      color: var(--color-primary-dark);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    body.light a {
+      color: var(--color-primary-light);
+    }
+    a:hover,
+    a:focus {
+      text-decoration: underline;
+    }
+
+    /* Card style for guides */
+    section.guide-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    section.guide-list a.guide-card {
+      background-color: var(--card-bg-dark);
+      padding: 1.8rem 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 6px 16px var(--card-shadow-dark);
+      display: block;
+      transition:
+        background-color 0.3s ease,
+        box-shadow 0.4s ease,
+        transform 0.3s ease;
+    }
+    body.light section.guide-list a.guide-card {
+      background-color: var(--card-bg-light);
+      box-shadow: 0 6px 16px var(--card-shadow-light);
+    }
+    section.guide-list a.guide-card:hover,
+    section.guide-list a.guide-card:focus {
+      box-shadow: 0 12px 30px var(--card-shadow-hover-dark);
+      transform: scale(1.05);
+      background-color: #2e1e4f;
+    }
+    body.light section.guide-list a.guide-card:hover,
+    body.light section.guide-list a.guide-card:focus {
+      box-shadow: 0 12px 30px var(--card-shadow-hover-light);
+      transform: scale(1.05);
+      background-color: #f0f0ff;
+    }
+
+    /* Guide title and description */
+    a.guide-card h2 {
+      margin: 0 0 0.6rem 0;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--color-primary-dark);
+      user-select: none;
+      letter-spacing: 0.03em;
+    }
+    body.light a.guide-card h2 {
+      color: var(--color-primary-light);
+    }
+    a.guide-card p {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--color-text-dark);
+      opacity: 0.9;
+      font-weight: 500;
+    }
+    body.light a.guide-card p {
+      color: var(--color-text-light);
+    }
+
+    /* Dark mode toggle button */
+    button#darkModeToggle {
+      position: fixed;
+      top: 1.3rem;
+      right: 1.3rem;
+      background-color: var(--color-primary-dark);
+      border: none;
+      color: var(--color-bg-dark);
+      font-size: 1.8rem;
+      padding: 0.6rem 1.3rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+      z-index: 1000;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+    }
+    button#darkModeToggle:hover {
+      background-color: var(--color-primary-hover-dark);
+      color: #0a0a0a;
+    }
+    body.light button#darkModeToggle {
+      background-color: var(--color-primary-light);
+      color: var(--color-bg-light);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    body.light button#darkModeToggle:hover {
+      background-color: var(--color-primary-hover-light);
+      color: var(--color-bg-light);
+    }
+
+    /* Sticky About button above guides */
+    #aboutStickyBtn {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-primary-dark);
+      color: var(--color-bg-dark);
+      padding: 0.65rem 1.3rem;
+      font-weight: 800;
+      font-size: 1.15rem;
+      border-radius: 0 0 20px 20px;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+      z-index: 500;
+      user-select: none;
+      margin-bottom: 2rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    #aboutStickyBtn:hover {
+      background-color: var(--color-primary-hover-dark);
+      color: #0a0a0a;
+    }
+    body.light #aboutStickyBtn {
+      background-color: var(--color-primary-light);
+      color: var(--color-bg-light);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    body.light #aboutStickyBtn:hover {
+      background-color: var(--color-primary-hover-light);
+      color: var(--color-bg-light);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 520px) {
+      body {
+        padding: 1.2rem 1.5rem;
+        margin: 2.5rem 1rem 3rem 1rem;
+        border-radius: 12px;
+      }
+      header h1 {
+        font-size: 2.4rem;
+      }
+      section.guide-list a.guide-card {
+        padding: 1.2rem 1.5rem;
+      }
+      a.guide-card h2 {
+        font-size: 1.35rem;
+      }
+      p.subtitle {
+        font-size: 1.15rem;
+        margin-bottom: 2rem;
+      }
+      #aboutStickyBtn {
+        font-size: 1.05rem;
+        padding: 0.55rem 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    /* About popup modal styles */
+    #aboutModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.65);
+      backdrop-filter: blur(5px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    #aboutModal.active {
+      display: flex;
+    }
+    #aboutModal .modal-content {
+      background-color: var(--card-bg-dark);
+      color: var(--color-text-dark);
+      padding: 2rem;
+      border-radius: 18px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 0 20px rgba(155, 89, 182, 0.6);
+      position: relative;
+    }
+    body.light #aboutModal .modal-content {
+      background-color: var(--card-bg-light);
+      color: var(--color-text-light);
+      box-shadow: 0 0 20px var(--card-shadow-hover-light);
+    }
+    #aboutModal .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--color-primary-dark);
+      cursor: pointer;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+    #aboutModal .close-btn:hover {
+      color: var(--color-primary-hover-dark);
+    }
+    body.light #aboutModal .close-btn {
+      color: var(--color-primary-light);
+    }
+    body.light #aboutModal .close-btn:hover {
+      color: var(--color-primary-hover-light);
+    }
+  </style>
 </head>
 <body>
   <button id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
@@ -390,67 +390,67 @@
     </div>
   </div>
 
-<script>
-  // Dark mode toggle with localStorage sync
-  const body = document.body;
-  const toggle = document.getElementById('darkModeToggle');
+  <script>
+    // Dark mode toggle with localStorage sync
+    const body = document.body;
+    const toggle = document.getElementById('darkModeToggle');
 
-  function applyTheme(theme) {
-    if (theme === 'light') {
-      body.classList.add('light');
-      toggle.textContent = '🌙';
-    } else {
-      body.classList.remove('light');
-      toggle.textContent = '☀️';
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        body.classList.add('light');
+        toggle.textContent = '🌙';
+      } else {
+        body.classList.remove('light');
+        toggle.textContent = '☀️';
+      }
     }
-  }
 
-  const savedTheme = localStorage.getItem('aeroguide-theme') || 'dark';
-  applyTheme(savedTheme);
+    const savedTheme = localStorage.getItem('aeroguide-theme') || 'dark';
+    applyTheme(savedTheme);
 
-  toggle.addEventListener('click', () => {
-    const current = body.classList.contains('light') ? 'light' : 'dark';
-    const newTheme = current === 'light' ? 'dark' : 'light';
-    applyTheme(newTheme);
-    localStorage.setItem('aeroguide-theme', newTheme);
-  });
+    toggle.addEventListener('click', () => {
+      const current = body.classList.contains('light') ? 'light' : 'dark';
+      const newTheme = current === 'light' ? 'dark' : 'light';
+      applyTheme(newTheme);
+      localStorage.setItem('aeroguide-theme', newTheme);
+    });
 
-  // About modal logic
-  const aboutBtn = document.getElementById('aboutStickyBtn');
-  const aboutModal = document.getElementById('aboutModal');
-  const closeBtn = aboutModal.querySelector('.close-btn');
+    // About modal logic
+    const aboutBtn = document.getElementById('aboutStickyBtn');
+    const aboutModal = document.getElementById('aboutModal');
+    const closeBtn = aboutModal.querySelector('.close-btn');
 
-  function openAbout() {
-    aboutModal.classList.add('active');
-    closeBtn.focus();
-  }
-
-  function closeAbout() {
-    aboutModal.classList.remove('active');
-    aboutBtn.focus();
-  }
-
-  aboutBtn.addEventListener('click', openAbout);
-  closeBtn.addEventListener('click', closeAbout);
-
-  // Close modal when clicking outside content
-  aboutModal.addEventListener('click', (e) => {
-    if (e.target === aboutModal) {
-      closeAbout();
+    function openAbout() {
+      aboutModal.classList.add('active');
+      closeBtn.focus();
     }
-  });
 
-  // Close modal on ESC key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
-      closeAbout();
+    function closeAbout() {
+      aboutModal.classList.remove('active');
+      aboutBtn.focus();
     }
-  });
 
-  // Open About modal automatically on page load (optional)
-  window.addEventListener('load', () => {
-    openAbout();
-  });
-</script>
+    aboutBtn.addEventListener('click', openAbout);
+    closeBtn.addEventListener('click', closeAbout);
+
+    // Close modal when clicking outside content
+    aboutModal.addEventListener('click', (e) => {
+      if (e.target === aboutModal) {
+        closeAbout();
+      }
+    });
+
+    // Close modal on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
+        closeAbout();
+      }
+    });
+
+    // Open About modal automatically on page load (optional)
+    window.addEventListener('load', () => {
+      openAbout();
+    });
+  </script>
 </body>
 </html>
