@@ -7,7 +7,7 @@
 <style>
   :root {
     --color-bg-dark: #121212;
-    --color-bg-gradient-dark: linear-gradient(135deg, #1a1a2e, #0f3460, #53354a, #1a1a2e);
+    --color-bg-gradient-dark: linear-gradient(135deg, #1a1a2e, #0f3460);
     --color-text-dark: #e0d9f2;
     --color-primary-dark: #9b59b6;
     --color-primary-hover-dark: #b088e8;
@@ -29,23 +29,8 @@
     box-sizing: border-box;
   }
 
-  /* Animated gradient background */
-  @keyframes gradientShift {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
   body {
-    background: linear-gradient(135deg, #1a1a2e, #0f3460, #53354a, #1a1a2e);
-    background-size: 300% 300%;
-    animation: gradientShift 30s ease infinite;
+    background: var(--color-bg-gradient-dark);
     color: var(--color-text-dark);
     font-family: var(--font-family);
     max-width: 900px;
@@ -59,8 +44,6 @@
 
   body.light {
     background-color: var(--color-bg-light);
-    background-image: none;
-    animation: none;
     color: var(--color-text-light);
     box-shadow: none;
     border-radius: 0;
@@ -267,68 +250,59 @@
     }
   }
 
-  /* Popup modal backdrop */
+  /* About popup modal styles */
   #aboutModal {
+    display: none;
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
+    inset: 0;
+    background-color: rgba(0,0,0,0.65);
+    backdrop-filter: blur(5px);
     z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
   }
-  #aboutModal.show {
-    opacity: 1;
-    pointer-events: auto;
+  #aboutModal.active {
+    display: flex;
   }
-
-  /* Modal content box */
-  #aboutModalContent {
-    background: var(--card-bg-dark);
+  #aboutModal .modal-content {
+    background-color: var(--card-bg-dark);
     color: var(--color-text-dark);
+    padding: 2rem;
+    border-radius: 18px;
     max-width: 600px;
-    width: 100%;
-    border-radius: 20px;
-    padding: 2rem 2.5rem;
-    box-shadow: 0 10px 30px rgba(155, 89, 182, 0.6);
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 0 20px rgba(155, 89, 182, 0.6);
     position: relative;
-    font-size: 1.1rem;
-    line-height: 1.5;
   }
-  body.light #aboutModalContent {
-    background: var(--card-bg-light);
+  body.light #aboutModal .modal-content {
+    background-color: var(--card-bg-light);
     color: var(--color-text-light);
-    box-shadow: 0 10px 30px rgba(106, 90, 205, 0.3);
+    box-shadow: 0 0 20px var(--card-shadow-hover-light);
   }
-
-  /* Close button */
-  #aboutModalClose {
+  #aboutModal .close-btn {
     position: absolute;
-    top: 0.6rem;
-    right: 0.8rem;
-    font-size: 1.8rem;
+    top: 1rem;
+    right: 1rem;
     background: none;
     border: none;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: var(--color-primary-dark);
     cursor: pointer;
-    font-weight: 700;
     transition: color 0.3s ease;
     user-select: none;
   }
-  #aboutModalClose:hover {
+  #aboutModal .close-btn:hover {
     color: var(--color-primary-hover-dark);
   }
-  body.light #aboutModalClose {
+  body.light #aboutModal .close-btn {
     color: var(--color-primary-light);
   }
-  body.light #aboutModalClose:hover {
+  body.light #aboutModal .close-btn:hover {
     color: var(--color-primary-hover-light);
   }
-
 </style>
 </head>
 <body>
@@ -342,7 +316,7 @@
   <p class="subtitle">Your ultimate collection of tech and flashing guides, updated regularly.</p>
 
   <!-- Sticky About button pinned above guides -->
-  <button id="aboutStickyBtn" type="button" aria-label="Go to About page" title="Go to About page">About AeroGuide</button>
+  <button id="aboutStickyBtn" type="button" aria-label="Open About AeroGuide" title="Open About AeroGuide">About AeroGuide</button>
 
   <section class="guide-list" aria-label="List of guides">
     <a href="guides/android_rom_megathread.html" class="guide-card" tabindex="0">
@@ -399,30 +373,19 @@
     </a>
   </section>
 
-  <section id="about" aria-label="About AeroGuide" style="margin-top: 4rem;">
-    <h2>About AeroGuide</h2>
-    <p>
-        We are passionate about providing clear, up-to-date, and comprehensive tech guides, focusing on flashing ROMs, rooting devices, and general device modding.<br><br>
-        Our mission is to make technical guides accessible and easy to follow for everyone, from beginners to advanced users.<br><br>
-        Discord: <a href="https://discord.gg/FJkYP4e2Q3" target="_blank" rel="noopener noreferrer">https://discord.gg/FJkYP4e2Q3</a><br>
-        Tiktok: <a href="https://www.tiktok.com/@lazartech_" target="_blank" rel="noopener noreferrer">https://www.tiktok.com/@lazartech_</a><br><br>
-        If you want to suggest a guide or report issues, feel free to contact us on our discord.</a><br><br>
-        Developed with ❤️ by lazartech.</a><br><br>
-    </p>
-  </section>
+  <!-- About Modal Popup -->
+  <div id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" aria-describedby="aboutDesc">
+    <div class="modal-content">
+      <button class="close-btn" aria-label="Close About AeroGuide">&times;</button>
+      <h2 id="aboutTitle">Welcome to AeroGuide!</h2>
+      <p id="aboutDesc" style="white-space: pre-line;">
+        We are passionate about providing clear, up-to-date, and comprehensive tech guides, focusing on flashing ROMs, rooting devices, and general device modding.
 
-  <!-- Popup Modal for About -->
-  <div id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle" aria-describedby="aboutModalDesc">
-    <div id="aboutModalContent">
-      <button id="aboutModalClose" aria-label="Close About AeroGuide popup">&times;</button>
-      <h2 id="aboutModalTitle">Welcome to AeroGuide!</h2>
-      <p id="aboutModalDesc">
-        We are passionate about providing clear, up-to-date, and comprehensive tech guides, focusing on flashing ROMs, rooting devices, and general device modding.<br><br>
-        Our mission is to make technical guides accessible and easy to follow for everyone, from beginners to advanced users.<br><br>
-        Discord: <a href="https://discord.gg/FJkYP4e2Q3" target="_blank" rel="noopener noreferrer">https://discord.gg/FJkYP4e2Q3</a><br>
-        Tiktok: <a href="https://www.tiktok.com/@lazartech_" target="_blank" rel="noopener noreferrer">https://www.tiktok.com/@lazartech_</a><br><br>
-        If you want to suggest a guide or report issues, feel free to contact us on our discord.</a><br><br>
-        Developed with ❤️ by lazartech.</a><br><br>
+        Our mission is to make technical guides accessible and easy to follow for everyone, from beginners to advanced users.
+
+        Discord: https://discord.gg/FJkYP4e2Q3
+        Tiktok: https://www.tiktok.com/@lazartech_
+        Developed with ❤️ by lazartech.
       </p>
     </div>
   </div>
@@ -452,37 +415,41 @@
     localStorage.setItem('aeroguide-theme', newTheme);
   });
 
-  // Scroll to About section when About button is clicked
-  document.getElementById('aboutStickyBtn').addEventListener('click', () => {
-    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-  });
-
-  // About Modal functionality
+  // About modal logic
+  const aboutBtn = document.getElementById('aboutStickyBtn');
   const aboutModal = document.getElementById('aboutModal');
-  const aboutModalClose = document.getElementById('aboutModalClose');
+  const closeBtn = aboutModal.querySelector('.close-btn');
 
-  // Show modal on page load
-  window.addEventListener('load', () => {
-    aboutModal.classList.add('show');
-  });
+  function openAbout() {
+    aboutModal.classList.add('active');
+    closeBtn.focus();
+  }
 
-  // Close modal on clicking close button
-  aboutModalClose.addEventListener('click', () => {
-    aboutModal.classList.remove('show');
-  });
+  function closeAbout() {
+    aboutModal.classList.remove('active');
+    aboutBtn.focus();
+  }
 
-  // Close modal on clicking outside modal content
+  aboutBtn.addEventListener('click', openAbout);
+  closeBtn.addEventListener('click', closeAbout);
+
+  // Close modal when clicking outside content
   aboutModal.addEventListener('click', (e) => {
     if (e.target === aboutModal) {
-      aboutModal.classList.remove('show');
+      closeAbout();
     }
   });
 
-  // Accessibility: close modal on Escape key
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && aboutModal.classList.contains('show')) {
-      aboutModal.classList.remove('show');
+  // Close modal on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
+      closeAbout();
     }
+  });
+
+  // Open About modal automatically on page load (optional)
+  window.addEventListener('load', () => {
+    openAbout();
   });
 </script>
 </body>
