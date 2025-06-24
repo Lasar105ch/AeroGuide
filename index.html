@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AeroGuide</title>
+<style>
+  :root {
+    --color-bg-dark: #121212;
+    --color-bg-gradient-dark: linear-gradient(135deg, #1a1a2e, #0f3460, #53354a, #1a1a2e);
+    --color-text-dark: #e0d9f2;
+    --color-primary-dark: #9b59b6;
+    --color-primary-hover-dark: #b088e8;
+    --color-bg-light: #f5f7ff;
+    --color-text-light: #222222;
+    --color-primary-light: #6a5acd;
+    --color-primary-hover-light: #8b6ed9;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --card-bg-dark: #1e1e2f;
+    --card-bg-light: #ffffff;
+    --card-shadow-dark: rgba(155, 89, 182, 0.2);
+    --card-shadow-hover-dark: rgba(155, 89, 182, 0.6);
+    --card-shadow-light: rgba(106, 90, 205, 0.15);
+    --card-shadow-hover-light: rgba(106, 90, 205, 0.4);
+  }
+
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Animated gradient background */
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  body {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460, #53354a, #1a1a2e);
+    background-size: 300% 300%;
+    animation: gradientShift 30s ease infinite;
+    color: var(--color-text-dark);
+    font-family: var(--font-family);
+    max-width: 900px;
+    margin: 3rem auto 4rem auto;
+    padding: 2rem 2.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.6;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(155, 89, 182, 0.3);
+  }
+
+  body.light {
+    background-color: var(--color-bg-light);
+    background-image: none;
+    animation: none;
+    color: var(--color-text-light);
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  /* Header with logo and title */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  header img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
+  }
+
+  header h1 {
+    font-weight: 800;
+    font-size: 3rem;
+    color: var(--color-primary-dark);
+    margin: 0;
+    user-select: none;
+    letter-spacing: 1.1px;
+    transition: color 0.3s ease;
+  }
+  body.light header h1 {
+    color: var(--color-primary-light);
+  }
+
+  p.subtitle {
+    font-size: 1.3rem;
+    color: var(--color-text-dark);
+    margin-bottom: 3rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.3s ease;
+  }
+  body.light p.subtitle {
+    color: var(--color-text-light);
+  }
+
+  a {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  body.light a {
+    color: var(--color-primary-light);
+  }
+  a:hover,
+  a:focus {
+    text-decoration: underline;
+  }
+
+  /* Card style for guides */
+  section.guide-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+
+  section.guide-list a.guide-card {
+    background-color: var(--card-bg-dark);
+    padding: 1.8rem 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px var(--card-shadow-dark);
+    display: block;
+    transition:
+      background-color 0.3s ease,
+      box-shadow 0.4s ease,
+      transform 0.3s ease;
+  }
+  body.light section.guide-list a.guide-card {
+    background-color: var(--card-bg-light);
+    box-shadow: 0 6px 16px var(--card-shadow-light);
+  }
+  section.guide-list a.guide-card:hover,
+  section.guide-list a.guide-card:focus {
+    box-shadow: 0 12px 30px var(--card-shadow-hover-dark);
+    transform: scale(1.05);
+    background-color: #2e1e4f;
+  }
+  body.light section.guide-list a.guide-card:hover,
+  body.light section.guide-list a.guide-card:focus {
+    box-shadow: 0 12px 30px var(--card-shadow-hover-light);
+    transform: scale(1.05);
+    background-color: #f0f0ff;
+  }
+
+  /* Guide title and description */
+  a.guide-card h2 {
+    margin: 0 0 0.6rem 0;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-primary-dark);
+    user-select: none;
+    letter-spacing: 0.03em;
+  }
+  body.light a.guide-card h2 {
+    color: var(--color-primary-light);
+  }
+  a.guide-card p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--color-text-dark);
+    opacity: 0.9;
+    font-weight: 500;
+  }
+  body.light a.guide-card p {
+    color: var(--color-text-light);
+  }
+
+  /* Dark mode toggle button */
+  button#darkModeToggle {
+    position: fixed;
+    top: 1.3rem;
+    right: 1.3rem;
+    background-color: var(--color-primary-dark);
+    border: none;
+    color: var(--color-bg-dark);
+    font-size: 1.8rem;
+    padding: 0.6rem 1.3rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    user-select: none;
+    z-index: 1000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+  }
+  button#darkModeToggle:hover {
+    background-color: var(--color-primary-hover-dark);
+    color: #0a0a0a;
+  }
+  body.light button#darkModeToggle {
+    background-color: var(--color-primary-light);
+    color: var(--color-bg-light);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  body.light button#darkModeToggle:hover {
+    background-color: var(--color-primary-hover-light);
+    color: var(--color-bg-light);
+  }
+
+  /* Sticky About button above guides */
+  #aboutStickyBtn {
+    position: sticky;
+    top: 0;
+    background-color: var(--color-primary-dark);
+    color: var(--color-bg-dark);
+    padding: 0.65rem 1.3rem;
+    font-weight: 800;
+    font-size: 1.15rem;
+    border-radius: 0 0 20px 20px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+    z-index: 500;
+    user-select: none;
+    margin-bottom: 2rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  #aboutStickyBtn:hover {
+    background-color: var(--color-primary-hover-dark);
+    color: #0a0a0a;
+  }
+  body.light #aboutStickyBtn {
+    background-color: var(--color-primary-light);
+    color: var(--color-bg-light);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  body.light #aboutStickyBtn:hover {
+    background-color: var(--color-primary-hover-light);
+    color: var(--color-bg-light);
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 520px) {
+    body {
+      padding: 1.2rem 1.5rem;
+      margin: 2.5rem 1rem 3rem 1rem;
+      border-radius: 12px;
+    }
+    header h1 {
+      font-size: 2.4rem;
+    }
+    section.guide-list a.guide-card {
+      padding: 1.2rem 1.5rem;
+    }
+    a.guide-card h2 {
+      font-size: 1.35rem;
+    }
+    p.subtitle {
+      font-size: 1.15rem;
+      margin-bottom: 2rem;
+    }
+    #aboutStickyBtn {
+      font-size: 1.05rem;
+      padding: 0.55rem 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  /* Popup modal backdrop */
+  #aboutModal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 2000;
+  }
+  #aboutModal.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Modal content box */
+  #aboutModalContent {
+    background: var(--card-bg-dark);
+    color: var(--color-text-dark);
+    max-width: 600px;
+    width: 100%;
+    border-radius: 20px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 10px 30px rgba(155, 89, 182, 0.6);
+    position: relative;
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+  body.light #aboutModalContent {
+    background: var(--card-bg-light);
+    color: var(--color-text-light);
+    box-shadow: 0 10px 30px rgba(106, 90, 205, 0.3);
+  }
+
+  /* Close button */
+  #aboutModalClose {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.8rem;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    color: var(--color-primary-dark);
+    cursor: pointer;
+    font-weight: 700;
+    transition: color 0.3s ease;
+    user-select: none;
+  }
+  #aboutModalClose:hover {
+    color: var(--color-primary-hover-dark);
+  }
+  body.light #aboutModalClose {
+    color: var(--color-primary-light);
+  }
+  body.light #aboutModalClose:hover {
+    color: var(--color-primary-hover-light);
+  }
+
+</style>
+</head>
+<body>
+  <button id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+
+  <header>
+    <img src="logo.svg" alt="AeroGuide Logo" />
+    <h1>AeroGuide</h1>
+  </header>
+  
+  <p class="subtitle">Your ultimate collection of tech and flashing guides, updated regularly.</p>
+
+  <!-- Sticky About button pinned above guides -->
+  <button id="aboutStickyBtn" type="button" aria-label="Go to About page" title="Go to About page">About AeroGuide</button>
+
+  <section class="guide-list" aria-label="List of guides">
+    <a href="guides/android_rom_megathread.html" class="guide-card" tabindex="0">
+      <h2>📦 Ultimate Android ROM & Recovery Megathread</h2>
+      <p>A comprehensive list of popular custom ROMs, recoveries, and firmware resources.</p>
+    </a>
+    <a href="guides/3utools-flashing.html" class="guide-card" tabindex="0">
+      <h2>📱 The Complete Guide to Flashing iPhone, iPad, or iPod with 3uTools</h2>
+      <p>Step-by-step instructions for flashing iOS devices safely using 3uTools on Windows.</p>
+    </a>
+    <a href="guides/dirtyflash.html" class="guide-card" tabindex="0">
+      <h2>⚡ How to Safely Update Your Custom ROM Without Losing Data (Dirty Flash)</h2>
+      <p>Learn how to update your custom Android ROM without wiping apps and data.</p>
+    </a>
+    <a href="guides/adb.html" class="guide-card" tabindex="0">
+      <h2>🔧 ADB & Fastboot Command Explainer</h2>
+      <p>Detailed explanation of essential ADB and Fastboot commands for Android devices.</p>
+    </a>
+    <a href="guides/dsusideloader.html" class="guide-card" tabindex="0">
+      <h2>📲 How to Use DSU Sideloader – Try Any ROM Without Flashing</h2>
+      <p>Learn how to temporarily load ROM images on your device without permanent flashing.</p>
+    </a>
+    <a href="guides/treblecompatible.html" class="guide-card" tabindex="0">
+      <h2>⚙️ How to Convert Any Android Device to Treble-Compatible</h2>
+      <p>Step-by-step process to make your Android device Project Treble compatible.</p>
+    </a>
+    <a href="guides/extremerom.html" class="guide-card" tabindex="0">
+      <h2>🔥 How to Install ExtremeROM Nexus V2 on Galaxy S10 / S20 / Note20 / S21 (Exynos Only)</h2>
+      <p>A detailed flashing guide for ExtremeROM Nexus V2 on supported Samsung devices.</p>
+    </a>
+    <a href="guides/hackintosh.html" class="guide-card" tabindex="0">
+      <h2>💻 The Complete Guide to Building a Hackintosh with OpenCore (2025 Edition)</h2>
+      <p>A thorough guide on building a Hackintosh using the OpenCore bootloader.</p>
+    </a>
+    <a href="guides/partitions.html" class="guide-card" tabindex="0">
+      <h2>🧩 Understanding Android Partitions: System, Vendor, Boot, Recovery & More</h2>
+      <p>Learn the layout and purpose of different Android partitions.</p>
+    </a>
+    <a href="guides/rootsamsung.html" class="guide-card" tabindex="0">
+      <h2>🔐 The Complete Guide to Rooting a Samsung Phone</h2>
+      <p>Comprehensive steps and tools to safely root Samsung smartphones.</p>
+    </a>
+    <a href="guides/evox.html" class="guide-card" tabindex="0">
+      <h2>🚀 The Complete Guide to Installing Evolution X Custom ROM</h2>
+      <p>Step-by-step installation instructions for Evolution X ROM.</p>
+    </a>
+    <a href="guides/twrp.html" class="guide-card" tabindex="0">
+      <h2>🛠️ The Complete Guide to Installing TWRP on Any Android Device</h2>
+      <p>Instructions for installing the popular custom recovery TWRP.</p>
+    </a>
+    <a href="guides/xiaomi.html" class="guide-card" tabindex="0">
+      <h2>📟 The Complete Xiaomi Unbrick & EDL Flash Guide</h2>
+      <p>Unbrick and flash your Xiaomi device using EDL mode with this comprehensive guide.</p>
+    </a>
+  </section>
+
+  <section id="about" aria-label="About AeroGuide" style="margin-top: 4rem;">
+    <h2>About AeroGuide</h2>
+    <p>
+        We are passionate about providing clear, up-to-date, and comprehensive tech guides, focusing on flashing ROMs, rooting devices, and general device modding.<br><br>
+        Our mission is to make technical guides accessible and easy to follow for everyone, from beginners to advanced users.<br><br>
+        Discord: <a href="https://discord.gg/FJkYP4e2Q3" target="_blank" rel="noopener noreferrer">https://discord.gg/FJkYP4e2Q3</a><br>
+        Tiktok: <a href="https://www.tiktok.com/@lazartech_" target="_blank" rel="noopener noreferrer">https://www.tiktok.com/@lazartech_</a><br><br>
+        If you want to suggest a guide or report issues, feel free to contact us on our discord.</a><br><br>
+        Developed with ❤️ by lazartech.</a><br><br>
+    </p>
+  </section>
+
+  <!-- Popup Modal for About -->
+  <div id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle" aria-describedby="aboutModalDesc">
+    <div id="aboutModalContent">
+      <button id="aboutModalClose" aria-label="Close About AeroGuide popup">&times;</button>
+      <h2 id="aboutModalTitle">Welcome to AeroGuide!</h2>
+      <p id="aboutModalDesc">
+        We are passionate about providing clear, up-to-date, and comprehensive tech guides, focusing on flashing ROMs, rooting devices, and general device modding.<br><br>
+        Our mission is to make technical guides accessible and easy to follow for everyone, from beginners to advanced users.<br><br>
+        Discord: <a href="https://discord.gg/FJkYP4e2Q3" target="_blank" rel="noopener noreferrer">https://discord.gg/FJkYP4e2Q3</a><br>
+        Tiktok: <a href="https://www.tiktok.com/@lazartech_" target="_blank" rel="noopener noreferrer">https://www.tiktok.com/@lazartech_</a><br><br>
+        If you want to suggest a guide or report issues, feel free to contact us on our discord.</a><br><br>
+        Developed with ❤️ by lazartech.</a><br><br>
+      </p>
+    </div>
+  </div>
+
+<script>
+  // Dark mode toggle with localStorage sync
+  const body = document.body;
+  const toggle = document.getElementById('darkModeToggle');
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      body.classList.add('light');
+      toggle.textContent = '🌙';
+    } else {
+      body.classList.remove('light');
+      toggle.textContent = '☀️';
+    }
+  }
+
+  const savedTheme = localStorage.getItem('aeroguide-theme') || 'dark';
+  applyTheme(savedTheme);
+
+  toggle.addEventListener('click', () => {
+    const current = body.classList.contains('light') ? 'light' : 'dark';
+    const newTheme = current === 'light' ? 'dark' : 'light';
+    applyTheme(newTheme);
+    localStorage.setItem('aeroguide-theme', newTheme);
+  });
+
+  // Scroll to About section when About button is clicked
+  document.getElementById('aboutStickyBtn').addEventListener('click', () => {
+    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // About Modal functionality
+  const aboutModal = document.getElementById('aboutModal');
+  const aboutModalClose = document.getElementById('aboutModalClose');
+
+  // Show modal on page load
+  window.addEventListener('load', () => {
+    aboutModal.classList.add('show');
+  });
+
+  // Close modal on clicking close button
+  aboutModalClose.addEventListener('click', () => {
+    aboutModal.classList.remove('show');
+  });
+
+  // Close modal on clicking outside modal content
+  aboutModal.addEventListener('click', (e) => {
+    if (e.target === aboutModal) {
+      aboutModal.classList.remove('show');
+    }
+  });
+
+  // Accessibility: close modal on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && aboutModal.classList.contains('show')) {
+      aboutModal.classList.remove('show');
+    }
+  });
+</script>
+</body>
+</html>
